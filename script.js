@@ -75,11 +75,29 @@
         });
     }
 
-    // --- Contact Form Handler ---
+    // --- Contact Form Handler (EmailJS) ---
+    // =============================================
+    // REPLACE THESE WITH YOUR REAL EMAILJS CREDENTIALS:
+    // 1. Sign up at https://www.emailjs.com/
+    // 2. Add an Email Service (Gmail, Outlook, etc.)
+    // 3. Create an Email Template with variables:
+    //    {{from_name}}, {{from_email}}, {{message}}
+    // 4. Copy your Public Key from Account > General
+    // =============================================
+    const EMAILJS_PUBLIC_KEY = process.env.EMAILJS_PUBLIC_KEY;
+    const EMAILJS_SERVICE_ID = process.env.EMAILJS_SERVICE_ID;
+    const EMAILJS_TEMPLATE_ID = process.env.EMAILJS_TEMPLATE_ID;
+
+    // Initialize EmailJS
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+    }
+
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', function (e) {
             e.preventDefault();
+
             const formData = new FormData(contactForm);
             const name = formData.get('name');
             const email = formData.get('email');
@@ -90,9 +108,34 @@
                 return;
             }
 
-            // In a real site, this would POST to a backend
-            alert('Thank you, ' + name + '! Your message has been sent.');
-            contactForm.reset();
+            // Disable button while sending
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+
+            // Check if EmailJS is loaded
+            if (typeof emailjs === 'undefined') {
+                alert('Email service not loaded. Please check your internet connection.');
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                return;
+            }
+
+            emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+                from_name: name,
+                from_email: email,
+                message: message
+            }).then(function () {
+                alert('Thank you, ' + name + '! Your message has been sent successfully.');
+                contactForm.reset();
+            }).catch(function (error) {
+                console.error('EmailJS Error:', error);
+                alert('Oops! Something went wrong. Please try again later.');
+            }).finally(function () {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            });
         });
     }
 })();
