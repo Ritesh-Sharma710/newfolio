@@ -19,24 +19,23 @@
 
     /* --- ASCII Header Overrides for demo --- */
     .ascii-header {
-        overflow-x: auto;
+        overflow: hidden;
         text-align: center;
         margin-bottom: 0;
     }
 
     .ascii-header>div {
         display: flex;
+        flex-direction: column;
         align-items: center;
-        justify-content: center;
         gap: 0;
     }
 
     .ascii-header .site-title {
         font-style: normal;
         font-weight: normal;
-        flex: 1;
-        min-width: 0;
-        overflow-x: auto;
+        width: 100%;
+        overflow: hidden;
     }
 
     .ascii-header .site-title pre {
@@ -51,9 +50,13 @@
         text-align: left;
     }
 
-    .ascii-header .theme {
-        margin-left: 1rem;
-        flex-shrink: 0;
+    .header-controls {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-top: 0.25rem;
     }
 </style>
 
@@ -155,14 +158,24 @@
     \  \::/\__\/         /__/:/\__\/         /__/:/     |__|:|      \  \::/      /__/:/     \  \::/     \  \:\    
      \__\/               \__\/               \__\/       \__\|       \__\/       \__\/       \__\/       \__\/    </pre>
             </span>
-            <a href="#" class="theme" id="theme-toggle" aria-label="Toggle theme">
-                <svg>
-                    <use href="#light"></use>
-                </svg>
-                <svg>
-                    <use href="#asleep"></use>
-                </svg>
-            </a>
+           <div class="header-controls">
+                <a href="#" class="theme" id="theme-toggle" aria-label="Toggle theme">
+                    <svg>
+                        <use href="#light"></use>
+                    </svg>
+                    <svg>
+                        <use href="#asleep"></use>
+                    </svg>
+                </a>
+                <button class="music-toggle" id="music-toggle" aria-label="Toggle music" title="Toggle music">
+                    <svg class="music-on-icon">
+                        <use href="#volume-on"></use>
+                    </svg>
+                    <svg class="music-off-icon" style="display:none">
+                        <use href="#volume-off"></use>
+                    </svg>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -226,14 +239,6 @@
 
     <footer>
         <span>&copy; The-Syntax-Sage 2026</span>
-        <span>
-            <svg style="width:1em;height:1em;vertical-align:middle">
-                <use href="#rss"></use>
-            </svg>
-            Feeds:
-            <a href="#">Atom</a> ·
-            <a href="#">RSS</a>
-        </span>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>

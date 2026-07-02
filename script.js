@@ -138,4 +138,118 @@
             });
         });
     }
+
+     var bgMusic = new Audio('ringtone/sitemusic.mp3');
+    bgMusic.loop = true;
+    bgMusic.volume = 0.5;
+
+    // --- Restore previous playback position (cross-page resume) ---
+    var savedTime = parseFloat(sessionStorage.getItem('bgMusicTime'));
+    if (!isNaN(savedTime) && savedTime > 0) {
+        bgMusic.currentTime = savedTime;
+    }
+
+    // --- Periodically save playback position ---
+    setInterval(function () {
+        if (!bgMusic.paused) {
+            sessionStorage.setItem('bgMusicTime', bgMusic.currentTime);
+        }
+    }, 500);
+
+    // --- Save position right before navigating away ---
+    window.addEventListener('beforeunload', function () {
+        sessionStorage.setItem('bgMusicTime', bgMusic.currentTime);
+        // Mark that music was playing so next page auto-resumes
+        sessionStorage.setItem('bgMusicPlaying', bgMusic.paused ? '0' : '1');
+    });
+
+    // --- Helper: safely play (handles promise rejection) ---
+    function safePlay() {
+        var p = bgMusic.play();
+        if (p !== undefined) {
+            p.catch(function () { /* browser blocked — handled below */ });
+        }
+    }
+
+    // --- Attempt autoplay if music was previously playing or first visit ---
+    var wasPlaying = sessionStorage.getItem('bgMusicPlaying');
+    if (wasPlaying === null || wasPlaying === '1') {
+        // First visit or was playing before navigation
+        var playAttempt = bgMusic.play();
+        if (playAttempt !== undefined) {
+            playAttempt.catch(function () {
+                // Autoplay blocked — start on first user interaction
+                function startMusic() {
+                    safePlay();
+                    sessionStorage.setItem('bgMusicPlaying', '1');
+                    document.removeEventListener('click', startMusic);
+                    document.removeEventListener('keydown', startMusic);
+                }
+                document.addEventListener('click', startMusic);
+                document.addEventListener('keydown', startMusic);
+            });
+        }
+    }
+
+    // --- Guard: re-play if tab loses/regains focus or double-click pauses ---
+    document.addEventListener('visibilitychange', function () {
+        if (!document.hidden && sessionStorage.getItem('bgMusicPlaying') === '1') {
+            safePlay();
+        }
+    });
+
+    window.addEventListener('focus', function () {
+        if (sessionStorage.getItem('bgMusicPlaying') === '1' && bgMusic.paused) {
+            safePlay();
+        }
+    });
+
+    // ==========================================================
+    // [UPDATE] Music Toggle Button — mute / unmute via header icon
+    //
+    // Swaps between volume-on and volume-off SVGs.
+    // Persists the muted state in sessionStorage so it survives
+    // page navigation. The click event stops propagation so it
+    // doesn't accidentally trigger the "start on first click"
+    // fallback or any other click listeners.
+    // ==========================================================
+    var musicToggle = document.getElementById('music-toggle');
+
+    // Helper to sync the icon with the current state
+    function updateMusicIcon() {
+        if (!musicToggle) return;
+        var onIcon = musicToggle.querySelector('.music-on-icon');
+        var offIcon = musicToggle.querySelector('.music-off-icon');
+        if (sessionStorage.getItem('bgMusicPlaying') === '0') {
+            // Music is muted
+            if (onIcon) onIcon.style.display = 'none';
+            if (offIcon) offIcon.style.display = '';
+        } else {
+            // Music is playing
+            if (onIcon) onIcon.style.display = '';
+            if (offIcon) offIcon.style.display = 'none';
+        }
+    }
+
+    // Set initial icon state on page load
+    updateMusicIcon();
+
+    if (musicToggle) {
+        musicToggle.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation(); // don't trigger "start music on click"
+
+            if (bgMusic.paused) {
+                // Currently muted → play
+                safePlay();
+                sessionStorage.setItem('bgMusicPlaying', '1');
+            } else {
+                // Currently playing → mute
+                bgMusic.pause();
+                sessionStorage.setItem('bgMusicPlaying', '0');
+            }
+            updateMusicIcon();
+        });
+    }
+
 })();

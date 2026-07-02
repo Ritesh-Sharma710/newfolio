@@ -4,12 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio - A fast, ultra-minimal personal portfolio">
-    <meta property="og:title" content="Portfolio">
-    <meta property="og:description" content="A fast, ultra-minimal personal portfolio">
-    <meta property="og:type" content="website">
-    <title>Home // Portfolio</title>
-
+    <meta name="description" content="[Blog Post Title Here] - Blog Post Template">
+    <meta property="og:title" content="[Blog Post Title Here]">
+    <meta property="og:description" content="[Short description of the blog post]">
+    <meta property="og:type" content="article">
+    <title>[Blog Post Title Here] // Portfolio</title>
 </head>
 <style>
     /* --- Wider page for ASCII header demo --- */
@@ -17,13 +16,14 @@
         max-width: 70rem;
     }
 
-    /* --- ASCII Header Overrides for demo --- */
+    /* [UPDATE] ASCII Header — overflow hidden to kill scrollbar */
     .ascii-header {
         overflow: hidden;
         text-align: center;
         margin-bottom: 0;
     }
 
+    /* [UPDATE] Changed to column layout — ASCII art on top, controls below */
     .ascii-header>div {
         display: flex;
         flex-direction: column;
@@ -50,6 +50,8 @@
         text-align: left;
     }
 
+    /* [UPDATE] Controls spread apart below ASCII art
+       — theme toggle on left, music toggle on right */
     .header-controls {
         display: flex;
         flex-direction: row;
@@ -58,10 +60,44 @@
         width: 100%;
         margin-top: 0.25rem;
     }
+
+    /* --- Template Specific Styles for Pictures and Links --- */
+    .post-image-container {
+        margin: 2rem 0;
+        text-align: center;
+    }
+
+    .post-image {
+        max-width: 100%;
+        height: auto;
+        border: 2px dashed var(--border);
+        border-radius: 4px;
+        padding: 0.25rem;
+        background: var(--code-bg);
+    }
+
+    .post-image-caption {
+        font-size: 0.85rem;
+        color: var(--desc-fg);
+        margin-top: 0.5rem;
+        font-style: italic;
+    }
+
+    .highlight-link {
+        color: var(--link);
+        font-weight: bold;
+        text-decoration: underline;
+        text-decoration-style: dashed;
+        transition: all 0.2s ease;
+    }
+
+    .highlight-link:hover {
+        color: var(--link-hover);
+        text-decoration-style: solid;
+    }
 </style>
 
 <link rel="stylesheet" href="style.css">
-
 
 <body>
     <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
@@ -140,6 +176,16 @@
                 d="M28,6H4A2,2,0,0,0,2,8V24a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V8A2,2,0,0,0,28,6Zm0,2V9.46l-12,8-12-8V8ZM4,24V12.54l11.43,7.62a1,1,0,0,0,1.14,0L28,12.54V24Z">
             </path>
         </symbol>
+        <!-- [UPDATE] Music toggle SVG icons (volume on / off) -->
+        <symbol id="volume-on" viewBox="0 0 32 32">
+            <path d="M23.41,25.25a1,1,0,0,1-.71-.29,1,1,0,0,1,0-1.42,8.58,8.58,0,0,0,0-12.13,1,1,0,0,1,1.41-1.41,10.58,10.58,0,0,1,0,14.96A1,1,0,0,1,23.41,25.25Z"></path>
+            <path d="M21,22.74a1,1,0,0,1-.71-.3,1,1,0,0,1,0-1.41,4.57,4.57,0,0,0,0-6.47,1,1,0,0,1,1.41-1.41,6.57,6.57,0,0,1,0,9.29A1,1,0,0,1,21,22.74Z"></path>
+            <path d="M18,28a1,1,0,0,1-.62-.22L9.56,21H4a1,1,0,0,1-1-1V12a1,1,0,0,1,1-1H9.56l7.82-6.78A1,1,0,0,1,19,5V27a1,1,0,0,1-.58.91A1,1,0,0,1,18,28ZM5,19h5a1,1,0,0,1,.62.22L17,24.18V7.82L10.62,12.78A1,1,0,0,1,10,13H5Z"></path>
+        </symbol>
+        <symbol id="volume-off" viewBox="0 0 32 32">
+            <path d="M31,12.41,29.59,11,26,14.59,22.41,11,21,12.41,24.59,16,21,19.59,22.41,21,26,17.41,29.59,21,31,19.59,27.41,16Z"></path>
+            <path d="M18,28a1,1,0,0,1-.62-.22L9.56,21H4a1,1,0,0,1-1-1V12a1,1,0,0,1,1-1H9.56l7.82-6.78A1,1,0,0,1,19,5V27a1,1,0,0,1-.58.91A1,1,0,0,1,18,28ZM5,19h5a1,1,0,0,1,.62.22L17,24.18V7.82L10.62,12.78A1,1,0,0,1,10,13H5Z"></path>
+        </symbol>
     </svg>
 
     <header class="ascii-header">
@@ -158,6 +204,7 @@
     \  \::/\__\/         /__/:/\__\/         /__/:/     |__|:|      \  \::/      /__/:/     \  \::/     \  \:\    
      \__\/               \__\/               \__\/       \__\|       \__\/       \__\/       \__\/       \__\/    </pre>
             </span>
+            <!-- [UPDATE] Header controls: theme toggle + music toggle -->
             <div class="header-controls">
                 <a href="#" class="theme" id="theme-toggle" aria-label="Toggle theme">
                     <svg>
@@ -179,11 +226,10 @@
         </div>
     </header>
 
-
     <hr>
 
     <nav>
-        <a href="index.html" aria-label="Home" class="active" aria-current="page">
+        <a href="index.html" aria-label="Home">
             <svg>
                 <use href="#home"></use>
             </svg><span class="s">Home</span>
@@ -198,12 +244,11 @@
                 <use href="#color-palette"></use>
             </svg><span class="s">Gallery</span>
         </a>
-        <a href="blogs.html" aria-label="Blogs">
+        <a href="blogs.html" aria-label="Blogs" class="active" aria-current="page">
             <svg>
                 <use href="#chat"></use>
             </svg><span class="s">Blogs</span>
         </a>
-
         <a href="contact.html" aria-label="Contact">
             <svg>
                 <use href="#email"></use>
@@ -214,89 +259,40 @@
     <hr>
 
     <main>
-        <h1>Building the Unknown.</h1>
-        <p>
-            I believe in the power of clean code, user-centric design,
-            continuous learning and strive to bring excellence to every endeavor.
-        </p>
+       
+        <article style="margin: 2rem 0; line-height: 1.8;">
+            <h1>Mastering Modern VPNs : A Step-by-Step Guide to Installing and Configuring WireGuard </h1>
+            <p>
+                <time style="display: inline-block; background: var(--tag-bg); color: var(--tag-fg); padding: 0.2rem 0.6rem; border-radius: 3px; font-size: 0.8rem; margin-bottom: 1.5rem;">[Date Here, e.g. 02 Jul 2026]</time>
+            </p>
 
-        <h2>Featured Projects</h2>
-        <ul class="p">
-            <li>
-                <time><span>01</span><span>2026</span></time>
-                <div>
-                    <a href="https://github.com/Ritesh-Sharma710/ZOTACK_SHELL">Zotack_Shell</a>
+            <p>This is the first introductory paragraph. You can start introducing the topic of your blog post here. Below, we'll demonstrate how to insert a link and an image with clean minimal styling.</p>
 
-            </li>
-            <li>
-                <time><span>12</span><span>2025</span></time>
-                <div>
-                    <a href="https://github.com/Ritesh-Sharma710/layer2_switch">layer2_switch</a>
+            <p>For highlighting important external links or references, you can use the class <code>highlight-link</code>. For example, here is a link to <a href="https://example.com" class="highlight-link" target="_blank" rel="noopener">Example Website</a> for reference.</p>
 
-            </li>
-            <li>
-                <time><span>08</span><span>2025</span></time>
-                <div>
-                    <a href="projects.html">Intrusion Detection System</a>
+            <!-- IMAGE REFERENCE CONTAINER -->
+            <div class="post-image-container">
+                <!-- Replace 'placeholder-url.jpg' with your actual image path -->
+                <img class="post-image" src="https://via.placeholder.com/800x400" alt="Descriptive alt text for the image">
+                <div class="post-image-caption">Figure 1: This is a customizable image caption explaining the graphic above.</div>
+            </div>
 
-            </li>
-        </ul>
+            <p>Here is another paragraph of text following the image. The image automatically styles itself with a dashed border to match the terminal theme, along with a clean background padding.</p>
 
-        <h1>Patents and Publications</h1>
+            <h2>Section Heading</h2>
+            <p>You can add section headings using the <code>&lt;h2&gt;</code> element to structure your content. Text will automatically wrap and scale properly on both mobile devices and desktop views.</p>
 
-        <h2>2026</h2>
-        <ul class="p" id="search-results">
-            <li>
-                <time><span>15</span><span>Apr</span></time>
-                <div>
-                    <a href=""></a>
-                    <div class="desc">Automated Real-Time Vehicle Emission Monitoring and Iot-Based Certification System
-                    </div>
-                </div>
-            </li>
+            <p>Another paragraph can go here. Feel free to duplicate paragraphs, insert links, or add more images as needed using the structure provided in this file.</p>
 
-            <ul class="p" id="search-results">
-                <li>
-                    <time><span>15</span><span>May</span></time>
-                    <div>
-                        <a href=""></a>
-                        <div class="desc"></div>
-                    </div>
-                </li>
-
-
-                <h1>About</h1>
-
-                <p>
-                    I'm a full-stack developer with a passion for building fast, accessible, and beautifully minimal web
-                    experiences. I specialize in modern JavaScript, Go, and Python — and I care deeply about clean code,
-                    performance, and developer experience.
-                </p>
-
-                <h2>Philosophy</h2>
-                <p>
-                    I believe in writing code that is simple, readable, and maintainable. I value performance and
-                    accessibility,
-                    and I aim to build interfaces that feel fast and delightful. Minimalism isn't just an aesthetic —
-                    it's a
-                    philosophy that drives every line of code I write.
-                </p>
-
-                <h2>Get in Touch</h2>
-                <p>
-                    Feel free to reach out via Social Media.
-                </p>
-                <ul class="tags">
-                    <li><a href="https://github.com/Ritesh-Sharma710" target="_blank" rel="noopener">GitHub</a></li>
-                    <li><a href="https://www.linkedin.com/in/ritesh-sharma-3aa43632b" target="_blank"
-                            rel="noopener">LinkedIn</a></li>
-                    <li><a href="https://x.com/rizie_rizzler?s=21" target="_blank" rel="noopener">Twitter / X</a></li>
-                    <li><a href="contact.html">Email Me</a></li>
-                </ul>
+            <p style="margin-top: 3rem;">
+                <a href="blogs.html" class="btn">&larr; Back to Blogs</a>
+            </p>
+        </article>
     </main>
 
     <hr>
 
+    <!-- [UPDATE] Cleaned footer — centered copyright only -->
     <footer>
         <span>&copy; The-Syntax-Sage 2026</span>
     </footer>

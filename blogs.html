@@ -19,24 +19,23 @@
 
     /* --- ASCII Header Overrides for demo --- */
     .ascii-header {
-        overflow-x: auto;
+        overflow: hidden;
         text-align: center;
         margin-bottom: 0;
     }
 
     .ascii-header>div {
         display: flex;
+        flex-direction: column;
         align-items: center;
-        justify-content: center;
         gap: 0;
     }
 
     .ascii-header .site-title {
         font-style: normal;
         font-weight: normal;
-        flex: 1;
-        min-width: 0;
-        overflow-x: auto;
+        width: 100%;
+        overflow: hidden;
     }
 
     .ascii-header .site-title pre {
@@ -51,9 +50,13 @@
         text-align: left;
     }
 
-    .ascii-header .theme {
-        margin-left: 1rem;
-        flex-shrink: 0;
+    .header-controls {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-top: 0.25rem;
     }
 </style>
 
@@ -155,14 +158,24 @@
     \  \::/\__\/         /__/:/\__\/         /__/:/     |__|:|      \  \::/      /__/:/     \  \::/     \  \:\    
      \__\/               \__\/               \__\/       \__\|       \__\/       \__\/       \__\/       \__\/    </pre>
             </span>
-            <a href="#" class="theme" id="theme-toggle" aria-label="Toggle theme">
-                <svg>
-                    <use href="#light"></use>
-                </svg>
-                <svg>
-                    <use href="#asleep"></use>
-                </svg>
-            </a>
+            <div class="header-controls">
+                <a href="#" class="theme" id="theme-toggle" aria-label="Toggle theme">
+                    <svg>
+                        <use href="#light"></use>
+                    </svg>
+                    <svg>
+                        <use href="#asleep"></use>
+                    </svg>
+                </a>
+                <button class="music-toggle" id="music-toggle" aria-label="Toggle music" title="Toggle music">
+                    <svg class="music-on-icon">
+                        <use href="#volume-on"></use>
+                    </svg>
+                    <svg class="music-off-icon" style="display:none">
+                        <use href="#volume-off"></use>
+                    </svg>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -206,31 +219,25 @@
 
         <h2>2026</h2>
         <ul class="p">
-            <li>
-                <time><span>28</span><span>Apr</span></time>
+             <li>
+                <time><span>02</span><span>Jul</span></time>
                 <div>
-                    <a href="#">Building an Ultra-Minimal Portfolio</a>
-                    <div class="desc">How I built a fast, accessible portfolio site inspired by the Zap theme using just
-                        HTML, CSS & JS</div>
+                    <a href="wireguard.html">Mastering Modern VPNs
+                    </a>
+                    <div class="desc">A Step-by-Step Guide to Installing and Configuring WireGuard</div>
                 </div>
             </li>
 
+
             <li>
-                <time><span>02</span><span>Feb</span></time>
+                <time><span>9</span><span>Jul</span></time>
                 <div>
-                    <a href="#">Why Go Open Source?</a>
-                    <div class="desc">Best practices for implementing open source projects.
+                    <a href="opensource.html">Why Go Open Source?</a>
+                    <div class="desc">How Contributing to Open Source Almost Landed Me My Next Role: A Case Study in Proof of Work
                     </div>
                 </div>
             </li>
-            <li>
-                <time><span>01</span><span>Jan</span></time>
-                <div>
-                    <a href="#">Deploying a static site on Cloudflare Pages</a>
-                    <div class="desc">Step-by-step guide to deploying static sites on Cloudflare Pages with custom
-                        domains</div>
-                </div>
-            </li>
+            
         </ul>
 
         <h2>2025</h2>
@@ -259,16 +266,8 @@
 
     <hr>
 
-    <footer>
+   <footer>
         <span>&copy; The-Syntax-Sage 2026</span>
-        <span>
-            <svg style="width:1em;height:1em;vertical-align:middle">
-                <use href="#rss"></use>
-            </svg>
-            Feeds:
-            <a href="#">Atom</a> ·
-            <a href="#">RSS</a>
-        </span>
     </footer>
 
     <script src="script.js"></script>

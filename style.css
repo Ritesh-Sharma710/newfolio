@@ -37,14 +37,14 @@
 html:not(.dk) {
     --bg: oklch(94% 0.04 85);
     --fg: oklch(15% 0 0);
-    --fg-bright: oklch(15% 0 0);
+    --fg-bright: rgb(11, 11, 11);
     --border: oklch(65% 0.04 85);
     --link: oklch(52.229% 0.24827 264.494);
     --link-hover: oklch(55% 0.2 265);
     --heading: oklch(30% 0.1 25);
     --heading-hash: oklch(45% 0.1 25);
     --time-bg: oklch(88% 0.04 85);
-    --time-fg: oklch(45% 0.02 85);
+    --time-fg: oklch(94% 0.02 85);
     --code-bg: oklch(90% 0.03 85);
     --code-fg: oklch(40% 0.15 145);
     --input-bg: oklch(97% 0.01 85);
@@ -509,11 +509,14 @@ pre code {
     background: none;
     padding: 0;
 }
+.ascii-header .site-title pre {
+    background: transparent;
+}
 
 /* --- Footer --- */
 footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     font-size: 0.82rem;
     color: var(--desc-fg);
@@ -526,6 +529,21 @@ footer a {
 
 footer svg {
     fill: currentColor;
+}
+
+.music-toggle {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--fg);
+    padding: 0.25rem;
+    border-radius: 4px;
+    transition: color 0.2s;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: inherit;
+    margin-left: 0.5rem;
 }
 
 /* --- Contact Form --- */
@@ -584,24 +602,24 @@ footer svg {
 }
 
 /* --- Responsive --- */
-@media (max-width: 600px) {
-    nav {
-        flex-wrap: wrap;
-        gap: 1rem;
+@media (max-width: 900px) {
+    .ascii-header .site-title {
+        overflow-x: hidden;
     }
 
-    .about-header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    footer {
-        flex-direction: column;
-        gap: 0.5rem;
-        text-align: center;
+    .ascii-header .site-title pre {
+        font-size: clamp(0.18rem, 2.5vw, 0.9rem);
+        white-space: pre;
+        overflow-x: hidden;
     }
 }
+
+@media (max-width: 480px) {
+    .ascii-header .site-title pre {
+        font-size: clamp(0.12rem, 2.2vw, 0.5rem);
+    }
+}
+
 
 /* --- Smooth Transitions --- */
 body,
