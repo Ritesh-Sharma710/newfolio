@@ -546,6 +546,16 @@ footer svg {
     margin-left: 0.5rem;
 }
 
+.music-toggle:hover {
+    color: var(--fg-bright);
+}
+
+.music-toggle svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: currentColor;
+}
+
 /* --- Contact Form --- */
 .form-group {
     margin-bottom: 1rem;

@@ -205,6 +205,85 @@
     });
 
     // ==========================================================
+    // [UPDATE] Persistent Background Music — survives page navigation
+    //
+    // Problem: navigating to a new page destroys the Audio object,
+    //          and double-clicking could pause/interrupt playback.
+    //
+    // Solution:
+    //  1. Save the current playback time to sessionStorage every
+    //     500 ms and on beforeunload so the next page can resume.
+    //  2. On load, read the saved time and seek to it before playing.
+    //  3. Guard against double-click / visibility-change pauses by
+    //     re-triggering play whenever the tab regains focus.
+    // ==========================================================
+
+    var bgMusic = new Audio('ringtone/sitemusic.mp3');
+    bgMusic.loop = true;
+    bgMusic.volume = 0.5;
+
+    // --- Restore previous playback position (cross-page resume) ---
+    var savedTime = parseFloat(sessionStorage.getItem('bgMusicTime'));
+    if (!isNaN(savedTime) && savedTime > 0) {
+        bgMusic.currentTime = savedTime;
+    }
+
+    // --- Periodically save playback position ---
+    setInterval(function () {
+        if (!bgMusic.paused) {
+            sessionStorage.setItem('bgMusicTime', bgMusic.currentTime);
+        }
+    }, 500);
+
+    // --- Save position right before navigating away ---
+    window.addEventListener('beforeunload', function () {
+        sessionStorage.setItem('bgMusicTime', bgMusic.currentTime);
+        // Mark that music was playing so next page auto-resumes
+        sessionStorage.setItem('bgMusicPlaying', bgMusic.paused ? '0' : '1');
+    });
+
+    // --- Helper: safely play (handles promise rejection) ---
+    function safePlay() {
+        var p = bgMusic.play();
+        if (p !== undefined) {
+            p.catch(function () { /* browser blocked — handled below */ });
+        }
+    }
+
+    // --- Attempt autoplay if music was previously playing or first visit ---
+    var wasPlaying = sessionStorage.getItem('bgMusicPlaying');
+    if (wasPlaying === null || wasPlaying === '1') {
+        // First visit or was playing before navigation
+        var playAttempt = bgMusic.play();
+        if (playAttempt !== undefined) {
+            playAttempt.catch(function () {
+                // Autoplay blocked — start on first user interaction
+                function startMusic() {
+                    safePlay();
+                    sessionStorage.setItem('bgMusicPlaying', '1');
+                    document.removeEventListener('click', startMusic);
+                    document.removeEventListener('keydown', startMusic);
+                }
+                document.addEventListener('click', startMusic);
+                document.addEventListener('keydown', startMusic);
+            });
+        }
+    }
+
+    // --- Guard: re-play if tab loses/regains focus or double-click pauses ---
+    document.addEventListener('visibilitychange', function () {
+        if (!document.hidden && sessionStorage.getItem('bgMusicPlaying') === '1') {
+            safePlay();
+        }
+    });
+
+    window.addEventListener('focus', function () {
+        if (sessionStorage.getItem('bgMusicPlaying') === '1' && bgMusic.paused) {
+            safePlay();
+        }
+    });
+
+    // ==========================================================
     // [UPDATE] Music Toggle Button — mute / unmute via header icon
     //
     // Swaps between volume-on and volume-off SVGs.
@@ -251,5 +330,4 @@
             updateMusicIcon();
         });
     }
-
 })();

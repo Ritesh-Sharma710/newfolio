@@ -62,8 +62,8 @@
 
 <link rel="stylesheet" href="style.css">
 
+
 <body>
-    <!-- SVG Spritesheet -->
     <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
         <symbol id="home" viewBox="0 0 32 32">
             <path
@@ -183,7 +183,7 @@
     <hr>
 
     <nav>
-        <a href="index.html" aria-label="Home">
+        <a href="index.html" aria-label="Home" class="active" aria-current="page">
             <svg>
                 <use href="#home"></use>
             </svg><span class="s">Home</span>
@@ -193,7 +193,7 @@
                 <use href="#code"></use>
             </svg><span class="s">Projects</span>
         </a>
-        <a href="gallery.html" aria-label="Gallery" class="active" aria-current="page">
+        <a href="gallery.html" aria-label="Gallery">
             <svg>
                 <use href="#color-palette"></use>
             </svg><span class="s">Gallery</span>
@@ -203,20 +203,14 @@
                 <use href="#chat"></use>
             </svg><span class="s">Blogs</span>
         </a>
+
         <a href="contact.html" aria-label="Contact">
             <svg>
                 <use href="#email"></use>
             </svg><span class="s">Contact</span>
         </a>
-        <a href="#" class="theme" id="theme-toggle" aria-label="Toggle theme">
-            <svg>
-                <use href="#light"></use>
-            </svg>
-            <svg>
-                <use href="#asleep"></use>
-            </svg>
-        </a>
     </nav>
+
 
     <hr>
 
