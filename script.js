@@ -26,6 +26,23 @@
         });
     }
 
+    // --- Global Blog/Project Card Touch & Click Routing ---
+    document.addEventListener('click', function (e) {
+        var card = e.target.closest('.blog-card');
+        if (card) {
+            // If user clicked directly on an <a> link, let native browser navigation handle it
+            if (e.target.closest('a')) return;
+            var link = card.querySelector('a[href]');
+            if (link && link.href) {
+                if (link.target === '_blank') {
+                    window.open(link.href, '_blank', 'noopener,noreferrer');
+                } else {
+                    window.location.href = link.href;
+                }
+            }
+        }
+    });
+
     // --- Gallery Lightbox ---
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');

@@ -20,12 +20,12 @@
     --input-bg: oklch(5% 0 0);
     --input-border: oklch(40% 0 0);
     --input-focus: oklch(70% 0.18 195);
-    --nav-1: oklch(83.844% 0.26429 144.596);
-    --nav-2: oklch(83.844% 0.26429 144.596);
-    --nav-3: oklch(83.844% 0.26429 144.596);
-    --nav-4: oklch(83.844% 0.26429 144.596);
-    --nav-5: oklch(83.844% 0.26429 144.596);
-    --nav-6: oklch(83.844% 0.26429 144.596);
+    --nav-1: #d4912a;
+    --nav-2: #d4912a;
+    --nav-3: #d4912a;
+    --nav-4: #d4912a;
+    --nav-5: #d4912a;
+    --nav-6: #d4912a;
     --gallery-border: oklch(30% 0 0);
     --tag-bg: oklch(20% 0 0);
     --tag-fg: oklch(70% 0.15 195);
@@ -582,28 +582,31 @@ pre code {
 }
 
 .music-toggle {
-    display: flex;
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
     text-decoration: none;
-    color: var(--fg);
-    padding: 0.25rem;
+    color: var(--blog-heading, var(--fg-bright, #d4912a));
+    padding: 0.35rem;
     border-radius: 4px;
-    transition: color 0.2s;
+    transition: all 0.2s ease;
     cursor: pointer;
-    background: none;
-    border: none;
-    font-family: inherit;
-    margin-left: 0.5rem;
+    background: transparent;
+    border: 1.5px solid var(--blog-border, var(--border, #8a7e5a));
+    margin-left: 0.6rem;
 }
 
 .music-toggle:hover {
-    color: var(--fg-bright);
+    color: var(--blog-heading, #d4912a);
+    border-color: var(--blog-heading, #d4912a);
+    box-shadow: 0 0 8px rgba(212, 145, 42, 0.35);
 }
 
 .music-toggle svg {
     width: 1.25rem;
     height: 1.25rem;
     fill: currentColor;
+    display: block;
 }
 
 /* --- Contact Form --- */
