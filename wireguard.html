@@ -464,8 +464,13 @@
 
                     <div class="post-image-container">
                         <img class="post-image" src="images/wireguard/2.png" alt="Package updating on VPS">
-                        <div class="post-image-caption">Figure 2: System update and workspace preparation on Ubuntu VPS.
+                        <div class="post-image-caption">Figure 1: System update and workspace preparation on Ubuntu VPS.
                         </div>
+                    </div>
+                    <div class="post-image-container">
+                        <img class="post-image" src="images/wireguard/1.png" alt="WireGuard Terminal Setup">
+                        <div class="post-image-caption">Figure 2: Initial terminal environment setup for WireGuard
+                            deployment.</div>
                     </div>
 
                     <p>Before installing any new packages, it's always best practice to pull down the latest package
@@ -517,6 +522,11 @@
                         <div class="post-image-caption">Figure 5: Initializing systemd service for wireguard interface.
                         </div>
                     </div>
+                    <div class="post-image-container">
+                        <img class="post-image" src="images/wireguard/7.png" alt="Client wg0.conf on Kali Linux">
+                        <div class="post-image-caption">Figure 7: Server configuration block on WSL Kali Linux.</div>
+                    </div>
+
 
                     <p>To bring the virtual interface online and make sure it automatically kicks off whenever the
                         server reboots, I initialized the systemd unit files:</p>
@@ -532,8 +542,8 @@ sudo systemctl status wg-quick@wg0</code></pre>
                     <pre><code>sudo vim /etc/wireguard/wg0.conf</code></pre>
 
                     <div class="post-image-container">
-                        <img class="post-image" src="images/wireguard/7.png" alt="Client wg0.conf on Kali Linux">
-                        <div class="post-image-caption">Figure 6: Client configuration block on WSL Kali Linux.</div>
+                        <img class="post-image" src="images/wireguard/8.png" alt="Client wg0.conf on Kali Linux">
+                        <div class="post-image-caption">Figure 8: Client configuration block on WSL Kali Linux.</div>
                     </div>
 
                     <p>Here, I assigned the client its own unique internal tunnel IP (like <code>10.100.0.2/24</code>),
@@ -543,6 +553,10 @@ sudo systemctl status wg-quick@wg0</code></pre>
                         <code>:wq</code> and spun the client interface up:
                     </p>
                     <pre><code>sudo wg-quick up wg0</code></pre>
+                    <div class="post-image-container">
+                        <img class="post-image" src="images/wireguard/11.png" alt="Client wg0.conf on Kali Linux">
+                        <div class="post-image-caption">Figure 11: Bring up Wireguard Interface on WSL Kali Linux.</div>
+                    </div>
 
                     <h3>Step 5: Firewalls, Routing, and Handshake Verification</h3>
                     <p>To allow the inbound tunnel packets to actually hit the WireGuard service without getting dropped
@@ -554,19 +568,34 @@ sudo systemctl status wg-quick@wg0</code></pre>
                     <pre><code>cat /proc/sys/net/ipv4/ip_forward</code></pre>
 
                     <div class="post-image-container">
-                        <img class="post-image" src="images/wireguard/8.png"
-                            alt="wg show output showing active handshake">
-                        <div class="post-image-caption">Figure 7: Verifying active WireGuard session and cryptographic
-                            handshake using wg show.</div>
+                        <img class="post-image" src="images/wireguard/10.png" alt="Checking kernel level forwarding">
+                        <div class="post-image-caption">Figure 10: Checking kernel level forwarding.</div>
                     </div>
 
                     <p>Finally, it was time for the moment of truth. To make sure the encrypted tunnel was actively
                         passing traffic back and forth, I checked the status utility on both sides:</p>
                     <pre><code>wg show</code></pre>
+                    <div class="post-image-container">
+                        <img class="post-image" src="images/wireguard/12.png"
+                            alt="wg show output showing active handshake">
+                        <div class="post-image-caption">Figure 12: Verifying active WireGuard session and cryptographic
+                            handshake using wg show.</div>
+                    </div>
+                    <div class="post-image-container">
+                        <img class="post-image" src="images/wireguard/13.png" alt="Client wg0.conf on Kali Linux">
+                        <div class="post-image-caption">Figure 13: Checking Status on Kali Linux.</div>
+                    </div>
+
 
                     <p>Looking at the output on both the server and client terminals, the peer entries matched cleanly,
                         showing active session timers, data transfer rates, and a fresh, successful cryptographic
-                        handshake!</p>
+                        handshake!. Also used TCPDUMP to verify ping was successfull and the secure channel is
+                        established.</p>
+                    <div class="post-image-container">
+                        <img class="post-image" src="images/wireguard/14.png" alt="Client wg0.conf on Kali Linux">
+                        <div class="post-image-caption">Figure 14: Checking Status on Ubuntu Server using TCPDUMP tool .
+                        </div>
+                    </div>
 
                     <p><strong>OVERALL STATUS: SUCCESS </strong></p>
 
