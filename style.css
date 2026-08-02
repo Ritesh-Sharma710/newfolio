@@ -31,24 +31,38 @@
     --tag-fg: oklch(70% 0.15 195);
     --desc-fg: oklch(55% 0 0);
     --title-fg: oklch(82% 0.18 85);
+
+    /* Spacing tokens (8px grid) */
+    --sp-1: 8px;
+    --sp-2: 16px;
+    --sp-3: 24px;
+    --sp-4: 32px;
+
+    /* Typography tokens */
+    --font-mono: "Courier New", Courier, "Liberation Mono", "Cascadia Mono", monospace;
+
+    /* Footer / structural tokens */
+    --border-color: oklch(35% 0 0);
+    --text-primary: oklch(94% 0 0);
+    --text-muted: oklch(45% 0 0);
 }
 
 /* --- Light Mode --- */
 html:not(.dk) {
-    --bg: oklch(94% 0.04 85);
+    --bg: #ffffff;
     --fg: oklch(15% 0 0);
-    --fg-bright: rgb(11, 11, 11);
-    --border: oklch(65% 0.04 85);
+    --fg-bright: #0a0a0a;
+    --border: oklch(85% 0 0);
     --link: oklch(52.229% 0.24827 264.494);
     --link-hover: oklch(55% 0.2 265);
     --heading: oklch(30% 0.1 25);
     --heading-hash: oklch(45% 0.1 25);
-    --time-bg: oklch(88% 0.04 85);
-    --time-fg: oklch(94% 0.02 85);
-    --code-bg: oklch(90% 0.03 85);
+    --time-bg: #f4f4f5;
+    --time-fg: oklch(40% 0 0);
+    --code-bg: #f4f4f5;
     --code-fg: oklch(40% 0.15 145);
-    --input-bg: oklch(97% 0.01 85);
-    --input-border: oklch(70% 0.04 85);
+    --input-bg: #fafafa;
+    --input-border: oklch(80% 0 0);
     --input-focus: oklch(45% 0.2 265);
     --nav-1: oklch(0% 0 0);
     --nav-2: oklch(0% 0 0);
@@ -56,11 +70,24 @@ html:not(.dk) {
     --nav-4: oklch(0% 0 0);
     --nav-5: oklch(0% 0 0);
     --nav-6: oklch(0% 0 0);
-    --gallery-border: oklch(75% 0.04 85);
-    --tag-bg: oklch(88% 0.04 85);
+    --gallery-border: #e4e4e7;
+    --tag-bg: #f4f4f5;
     --tag-fg: oklch(45% 0.2 265);
-    --desc-fg: oklch(50% 0.02 85);
+    --desc-fg: oklch(45% 0 0);
     --title-fg: oklch(40% 0.15 25);
+
+    /* Light mode structural overrides */
+    --border-color: #e4e4e7;
+    --text-primary: #0a0a0a;
+    --text-muted: #71717a;
+}
+
+/* Light mode mesh grid override */
+html:not(.dk) body {
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.035) 1px, transparent 1px);
+    background-size: 32px 32px;
 }
 
 /* --- Light Mode Theme Toggle --- */
@@ -104,6 +131,12 @@ body {
     margin: 0 auto;
     padding: 2rem 1.5rem;
     transition: background 0.2s, color 0.2s;
+
+    /* Subtle 32px mesh grid background */
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 32px 32px;
 }
 
 /* --- Typography --- */
@@ -509,26 +542,43 @@ pre code {
     background: none;
     padding: 0;
 }
+
 .ascii-header .site-title pre {
     background: transparent;
 }
 
 /* --- Footer --- */
-footer {
+.site-footer {
+    padding: var(--sp-3) 0;
     display: flex;
-    justify-content: center;
     align-items: center;
-    font-size: 0.82rem;
-    color: var(--desc-fg);
-    padding-top: 0.5rem;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto;
 }
 
-footer a {
-    color: var(--link);
+.site-footer-copy {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
 }
 
-footer svg {
-    fill: currentColor;
+.site-footer-links {
+    display: flex;
+    gap: var(--sp-3);
+    list-style: none;
+}
+
+.site-footer-links a {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+}
+
+.site-footer-links a:hover {
+    color: var(--text-primary);
 }
 
 .music-toggle {

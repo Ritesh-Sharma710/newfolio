@@ -4,64 +4,417 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio - A fast, ultra-minimal personal portfolio">
-    <meta property="og:title" content="Portfolio">
-    <meta property="og:description" content="A fast, ultra-minimal personal portfolio">
+    <meta name="description" content="Blog Insights — Thoughts, loops, and learnings from The-Syntax-Sage">
+    <meta property="og:title" content="Blog Insights // The-Syntax-Sage">
+    <meta property="og:description" content="Thoughts, loops, and learnings — straight from The-Syntax-Sage.">
     <meta property="og:type" content="website">
-    <title>Home // Portfolio</title>
+    <title>Blog Insights // The-Syntax-Sage</title>
 
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ===== DEMO PAGE — BLOG INSIGHTS RETRO LAYOUT ===== */
+
+        /* Override body for this page */
+        body {
+            max-width: 100%;
+            padding: 0;
+            background: var(--blog-bg);
+            font-family: "Courier New", Courier, monospace;
+        }
+
+        /* --- Custom color tokens for blog page --- */
+        :root {
+            --blog-bg: #1a1a12;
+            --blog-fg: #c8c0a0;
+            --blog-heading: #d4912a;
+            --blog-subtitle: #a09878;
+            --blog-border: #8a7e5a;
+            --blog-border-dot: #6a6244;
+            --blog-card-border: #3a9bb5;
+            --blog-card-bg: #2a2a1e;
+            --blog-badge-bg: #2a8a6a;
+            --blog-badge-fg: #e8ffe8;
+            --blog-search-bg: #2e2e20;
+            --blog-search-border: #8a7e5a;
+            --blog-filter-border: #8a7e5a;
+            --blog-filter-active-bg: #d4912a;
+            --blog-filter-active-fg: #1a1a12;
+            --blog-count-fg: #b0a878;
+            --blog-date-bg: rgba(20, 20, 14, 0.85);
+            --blog-date-fg: #c8c0a0;
+            --blog-gold-line: #d4912a;
+        }
+
+        html:not(.dk) {
+            --blog-bg: #ffffff;
+            --blog-fg: #2c2818;
+            --blog-heading: #b86810;
+            --blog-subtitle: #5a5030;
+            --blog-border: #d0c8a8;
+            --blog-border-dot: #b0a880;
+            --blog-card-border: #3a9bb5;
+            --blog-card-bg: #ffffff;
+            --blog-badge-bg: #2a8a6a;
+            --blog-badge-fg: #e8ffe8;
+            --blog-search-bg: #ffffff;
+            --blog-search-border: #b0a880;
+            --blog-filter-border: #b0a880;
+            --blog-filter-active-bg: #b86810;
+            --blog-filter-active-fg: #ffffff;
+            --blog-count-fg: #5a5030;
+            --blog-date-bg: rgba(30, 28, 18, 0.85);
+            --blog-date-fg: #ffffff;
+            --blog-gold-line: #b86810;
+        }
+
+        /* --- Page wrapper with dotted border --- */
+        .blog-page {
+            max-width: 72rem;
+            margin: 0 auto;
+            padding: 1rem;
+            min-height: 100vh;
+        }
+
+        .blog-frame {
+            border: 3px dotted var(--blog-border-dot);
+            padding: 2rem 2.5rem 3rem;
+            position: relative;
+        }
+
+        /* Gold accent line at top */
+        .blog-frame::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--blog-gold-line);
+        }
+
+        /* --- Header Section --- */
+        .blog-header {
+            text-align: center;
+            padding: 2.5rem 0 1.5rem;
+        }
+
+        .blog-header h1 {
+            font-family: "Courier New", Courier, monospace;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            color: var(--blog-heading);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin: 0;
+            line-height: 1.1;
+            text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+            /* Pixel-like rendering */
+            -webkit-font-smoothing: none;
+            -moz-osx-font-smoothing: auto;
+            image-rendering: pixelated;
+        }
+
+        .blog-header h1::before {
+            content: none;
+        }
+
+        .blog-header .subtitle {
+            font-size: 1rem;
+            color: var(--blog-subtitle);
+            margin-top: 0.75rem;
+            font-style: italic;
+            letter-spacing: 0.03em;
+        }
+
+        /* --- Search Bar --- */
+        .blog-search {
+            display: flex;
+            justify-content: center;
+            padding: 1.5rem 0 1rem;
+        }
+
+        .blog-search-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 22rem;
+        }
+
+        .blog-search-wrapper svg {
+            position: absolute;
+            left: 0.85rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1.1rem;
+            height: 1.1rem;
+            fill: var(--blog-subtitle);
+            pointer-events: none;
+        }
+
+        .blog-search input {
+            width: 100%;
+            padding: 0.65rem 1rem 0.65rem 2.5rem;
+            background: var(--blog-search-bg);
+            color: var(--blog-fg);
+            border: 2px solid var(--blog-search-border);
+            font-family: inherit;
+            font-size: 0.9rem;
+            border-radius: 2px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .blog-search input::placeholder {
+            color: var(--blog-subtitle);
+            opacity: 0.7;
+        }
+
+        .blog-search input:focus {
+            border-color: var(--blog-heading);
+            box-shadow: 0 0 0 2px rgba(212, 145, 42, 0.2);
+        }
+
+        /* --- Category Filters --- */
+        .blog-filters {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            padding: 0.5rem 0 1rem;
+        }
+
+        .blog-filter-btn {
+            padding: 0.45rem 1rem;
+            border: 2px solid var(--blog-filter-border);
+            background: transparent;
+            color: var(--blog-fg);
+            font-family: inherit;
+            font-size: 0.82rem;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 2px;
+            text-transform: capitalize;
+        }
+
+        .blog-filter-btn:hover {
+            border-color: var(--blog-heading);
+            color: var(--blog-heading);
+            background: transparent;
+        }
+
+        .blog-filter-btn.active {
+            background: var(--blog-filter-active-bg);
+            color: var(--blog-filter-active-fg);
+            border-color: var(--blog-filter-active-bg);
+        }
+
+        /* --- Post Count --- */
+        .blog-count {
+            text-align: center;
+            padding: 0.5rem 0 1.5rem;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--blog-count-fg);
+            font-weight: bold;
+        }
+
+        /* --- Blog Cards Grid --- */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            padding: 0;
+        }
+
+        .blog-card {
+            border: 3px solid var(--blog-card-border);
+            border-radius: 4px;
+            overflow: hidden;
+            background: var(--blog-card-bg);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            cursor: pointer;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .blog-card-image {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+        }
+
+        .blog-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            image-rendering: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .blog-card:hover .blog-card-image img {
+            transform: scale(1.05);
+        }
+
+        /* Category badge */
+        .blog-card-badge {
+            position: absolute;
+            top: 0.65rem;
+            left: 0.65rem;
+            background: var(--blog-badge-bg);
+            color: var(--blog-badge-fg);
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.25rem 0.6rem;
+            border-radius: 2px;
+            z-index: 2;
+        }
+
+        /* Date overlay */
+        .blog-card-date {
+            position: absolute;
+            top: 0.65rem;
+            right: 0.65rem;
+            background: var(--blog-date-bg);
+            color: var(--blog-date-fg);
+            font-size: 0.72rem;
+            font-weight: bold;
+            padding: 0.2rem 0.55rem;
+            border-radius: 2px;
+            letter-spacing: 0.04em;
+            z-index: 2;
+        }
+
+        /* Card content */
+        .blog-card-body {
+            padding: 1rem 1rem 1.25rem;
+        }
+
+        .blog-card-title {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--fg-bright);
+            margin: 0 0 0.4rem;
+            line-height: 1.35;
+        }
+
+        .blog-card-title::before {
+            content: none;
+        }
+
+        .blog-card-excerpt {
+            font-size: 0.8rem;
+            color: var(--blog-subtitle);
+            line-height: 1.55;
+            margin: 0;
+        }
+
+        .blog-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.72rem;
+            color: var(--blog-count-fg);
+        }
+
+        .blog-card-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .blog-card-meta svg {
+            width: 0.85rem;
+            height: 0.85rem;
+            fill: currentColor;
+        }
+
+        /* --- ASCII Header Overrides for demo --- */
+        .ascii-header {
+            overflow: hidden;
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        .ascii-header>div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        .ascii-header .site-title {
+            font-style: normal;
+            font-weight: normal;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .ascii-header .site-title pre {
+            font-family: "Courier New", Courier, monospace;
+            font-size: clamp(0.35rem, 1.1vw, 0.9rem);
+            line-height: 1.15;
+            color: var(--title-fg);
+            margin: 0;
+            padding: 0;
+            white-space: pre;
+            display: inline-block;
+            text-align: left;
+        }
+
+        .header-controls {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-top: 0.25rem;
+        }
+
+        /* --- Nav override for consistency --- */
+        nav {
+            padding: 0.5rem 2.5rem;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 900px) {
+            .blog-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .blog-frame {
+                padding: 1.5rem 1.5rem 2rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-frame {
+                padding: 1rem 1rem 1.5rem;
+            }
+
+            .blog-header h1 {
+                font-size: 2rem;
+            }
+
+            nav {
+                padding: 0.5rem 1rem;
+            }
+        }
+    </style>
 </head>
-<style>
-    /* --- Wider page for ASCII header demo --- */
-    body {
-        max-width: 70rem;
-    }
-
-    /* --- ASCII Header Overrides for demo --- */
-    .ascii-header {
-        overflow: hidden;
-        text-align: center;
-        margin-bottom: 0;
-    }
-
-    .ascii-header>div {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0;
-    }
-
-    .ascii-header .site-title {
-        font-style: normal;
-        font-weight: normal;
-        width: 100%;
-        overflow: hidden;
-    }
-
-    .ascii-header .site-title pre {
-        font-family: "Courier New", Courier, monospace;
-        font-size: clamp(0.35rem, 1.1vw, 0.9rem);
-        line-height: 1.15;
-        color: var(--title-fg);
-        margin: 0;
-        padding: 0;
-        white-space: pre;
-        display: inline-block;
-        text-align: left;
-    }
-
-    .header-controls {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        margin-top: 0.25rem;
-    }
-</style>
-
-<link rel="stylesheet" href="style.css">
-
 
 <body>
     <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
@@ -119,13 +472,6 @@
                 d="M13.5025,5.4136A15.0755,15.0755,0,0,0,25.096,23.6082a11.1134,11.1134,0,0,1-7.9749,3.3893c-.1385,0-.2782.0051-.4178,0A11.0944,11.0944,0,0,1,13.5025,5.4136M14.98,3a1.0024,1.0024,0,0,0-.1746.0156A13.0959,13.0959,0,0,0,16.63,28.9973c.1641.006.3282,0,.4909,0a13.0724,13.0724,0,0,0,10.702-5.5556,1.0094,1.0094,0,0,0-.7833-1.5644A13.08,13.08,0,0,1,15.8892,4.38,1.0149,1.0149,0,0,0,14.98,3Z">
             </path>
         </symbol>
-        <symbol id="rss" viewBox="0 0 32 32">
-            <path
-                d="M8,18c-3.3,0-6,2.7-6,6s2.7,6,6,6s6-2.7,6-6C14,20.7,11.3,18,8,18z M8,28c-2.2,0-4-1.8-4-4s1.8-4,4-4s4,1.8,4,4C12,26.2,10.2,28,8,28z">
-            </path>
-            <path d="M30,24h-2C28,13,19,4,8,4V2C20.1,2,30,11.9,30,24z"></path>
-            <path d="M22,24h-2c0-6.6-5.4-12-12-12v-2C15.7,10,22,16.3,22,24z"></path>
-        </symbol>
         <symbol id="code" viewBox="0 0 32 32">
             <path d="M31,16l-7,7-1.41-1.41L28.17,16l-5.58-5.59L24,9l7,7z"></path>
             <path d="M1,16l7-7,1.41,1.41L3.83,16l5.58,5.59L8,23L1,16z"></path>
@@ -140,8 +486,20 @@
                 d="M28,6H4A2,2,0,0,0,2,8V24a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V8A2,2,0,0,0,28,6Zm0,2V9.46l-12,8-12-8V8ZM4,24V12.54l11.43,7.62a1,1,0,0,0,1.14,0L28,12.54V24Z">
             </path>
         </symbol>
+        <symbol id="clock" viewBox="0 0 32 32">
+            <path d="M16,4A12,12,0,1,0,28,16,12,12,0,0,0,16,4Zm0,22A10,10,0,1,1,26,16,10,10,0,0,1,16,26Z"></path>
+            <polygon points="20.59 22 15 16.41 15 7 17 7 17 15.58 22 20.59 20.59 22"></polygon>
+        </symbol>
+        <symbol id="rss" viewBox="0 0 32 32">
+            <path
+                d="M8,18c-3.3,0-6,2.7-6,6s2.7,6,6,6s6-2.7,6-6C14,20.7,11.3,18,8,18z M8,28c-2.2,0-4-1.8-4-4s1.8-4,4-4s4,1.8,4,4C12,26.2,10.2,28,8,28z">
+            </path>
+            <path d="M30,24h-2C28,13,19,4,8,4V2C20.1,2,30,11.9,30,24z"></path>
+            <path d="M22,24h-2c0-6.6-5.4-12-12-12v-2C15.7,10,22,16.3,22,24z"></path>
+        </symbol>
     </svg>
 
+    <!-- ===== ASCII Site Header ===== -->
     <header class="ascii-header">
         <div>
             <span class="site-title">
@@ -151,14 +509,14 @@
     /  /::\  |  |\      /  /::|  /__/\      /  /::\      |  |:|     /  /::\     /  /::\     /  /::\     /  /::\   
    /__/:/\:\ |  |:|    /  /:|:|  \  \:\    /  /:/\:\     |  |:|    /__/:/\:\   /  /:/\:\   /  /:/\:\   /  /:/\:\  
   _\_ \:\ \:\|  |:|   /  /:/|:|__ \__\:\  /  /::\ \:\    |__|:|__ _\_ \:\ \:\ /  /::\ \:\ /  /:/  \:\ /  /::\ \:\ 
- /__/\ \:\ \:|__|:|__/__/:/ |:| /\/  /::\/__/:/\:\_\:____/__/::::/__/\ \:\ \:/__/:/\:\_\:/__/:/_\_ \:/__/:/\:\ \:\
+ /__/\ \:\ \:|__|:|__/__/:/ |:| /\/  /::\/__ /:/\:\_\:__ /__/::::/__/\ \:\ \:/__/:/\:\_\:/__/:/_\_ \:/__/:/\:\ \:\
  \  \:\ \:\_\/  /::::\__\/  |:|/:/  /:/\:\__\/  \:\/:\__\::::/~~~\  \:\ \:\_\\__\/  \:\/:\  \:\__/\_\\  \:\ \:\_\/
   \  \:\_\:\/  /:/~~~~   |  |:/:/  /:/__\/    \__\::/   |~~|:|    \  \:\_\:\      \__\::/ \  \:\ \:\  \  \:\ \:\  
    \  \:\/:/__/:/        |__|::/__/:/         /  /:/    |  |:|     \  \:\/:/      /  /:/   \  \:\/:/   \  \:\_\/  
     \  \::/\__\/         /__/:/\__\/         /__/:/     |__|:|      \  \::/      /__/:/     \  \::/     \  \:\    
      \__\/               \__\/               \__\/       \__\|       \__\/       \__\/       \__\/       \__\/    </pre>
             </span>
-           <div class="header-controls">
+            <div class="header-controls">
                 <a href="#" class="theme" id="theme-toggle" aria-label="Toggle theme">
                     <svg>
                         <use href="#light"></use>
@@ -179,29 +537,29 @@
         </div>
     </header>
 
-
     <hr>
 
+    <!-- ===== Navigation ===== -->
     <nav>
         <a href="index.html" aria-label="Home">
             <svg>
                 <use href="#home"></use>
             </svg><span class="s">Home</span>
         </a>
-        <a href="projects.html" aria-label="Projects" class="active" aria-current="page">
+        <a href="projects.html" aria-label="Projects">
             <svg>
                 <use href="#code"></use>
             </svg><span class="s">Projects</span>
-        </a>
-        <a href="gallery.html" aria-label="Gallery">
-            <svg>
-                <use href="#color-palette"></use>
-            </svg><span class="s">Gallery</span>
         </a>
         <a href="blogs.html" aria-label="Blogs">
             <svg>
                 <use href="#chat"></use>
             </svg><span class="s">Blogs</span>
+        </a>
+        <a href="gallery.html" aria-label="Gallery">
+            <svg>
+                <use href="#color-palette"></use>
+            </svg><span class="s">Gallery</span>
         </a>
         <a href="contact.html" aria-label="Contact">
             <svg>
@@ -210,145 +568,440 @@
         </a>
     </nav>
 
-    <hr>
-
+    <!-- ===== PROJECTS RETRO GRID CONTENT ===== -->
     <main>
-        <h1>Projects</h1>
-        <p>Here are some of my projects.</p>
+        <div class="blog-page">
+            <div class="blog-frame">
 
-        <h2>2026</h2>
-        <ul class="p" id="search-results">
-            <li>
-                <time><span>15</span><span>Apr</span></time>
-                <div>
-                    <a href="https://github.com/Ritesh-Sharma710/">grpc_load_balancer</a>
-                    <div class="desc">built in Go</div>
+                <!-- Project Header -->
+                <div class="blog-header">
+                    <h1>Projects</h1>
+                    <p class="subtitle">Software engineering, cybersecurity, systems, IoT & hackathon builds — straight
+                        from The-Syntax-Sage.</p>
                 </div>
-            </li>
-            <li>
-                <time><span>20</span><span>Mar</span></time>
-                <div>
-                    <a href="https://github.com/Ritesh-Sharma710/">INTRUSION DETECTION SYSTEM (IDS)</a>
-                    <div class="desc">ML based idw and ip blocking using R/Python etc</div>
-                </div>
-            </li>
-            <li>
-                <time><span>25</span><span>Mar</span></time>
-                <div>
-                    <a href="https://github.com/Ritesh-Sharma710/">layer2_switch</a>
-                    <div class="desc"></div>
-                </div>
-            </li>
-            <li>
-                <time><span>03</span><span>Feb</span></time>
-                <div>
-                    <a href="https://github.com/Ritesh-Sharma710/">Bday Greeting Website</a>
-                    <div class="desc"></div>
-                </div>
-            </li>
-        </ul>
 
-        <h2>2025</h2>
-        <ul class="p">
-            <li>
-                <time><span>11</span><span>Dec</span></time>
-                <div>
-                    <a href="https://github.com/Ritesh-Sharma710/">Trekiffy</a>
-                    <div class="desc"></div>
-                </div>
-            </li>
-
-            <li>
-                <time><span>08</span><span>Aug</span></time>
-                <div>
-                    <a href="https://github.com/Ritesh-Sharma710/">Language Agnostic Chatbot(SIH 2025)</a>
-                    <div class="desc"></div>
-                </div>
-            </li>
-            <li>
-                <time><span>20</span><span>Jul</span></time>
-                <div>
-                    <a href="https://github.com/Ritesh-Sharma710/">MIMIR ( AI AGENT)</a>
-                    <div class="desc">LANGCHAIN AND PYTHON </div>
-                </div>
-            </li>
-            <li>
-                <time><span>05</span><span>May</span></time>
-                <div>
-                    <a href="https://github.com/Ritesh-Sharma710/">Web Server</a>
-                    <div class="desc"></div>
-                </div>
-            </li>
-            <li>
-                <time><span>18</span><span>May</span></time>
-                <div>
-                    <a href="https://github.com/Ritesh-Sharma710/">ZOTACK_SHELL</a>
-                    <div class="desc"></div>
-                </div>
-            </li>
-            <li>
-                <time><span>05</span><span>Feb</span></time>
-                <div>
-                    <a href="https://github.com/Ritesh-Sharma710/">Budget Guardians</a>
-                    <div class="desc"></div>
-                </div>
-            </li>
-
-            <h2>Hardware Projects</h2>
-            <li>
-                <time><span>08</span><span>Nov</span></time>
-                <div>
-                    <a href="">Cyber Security Hardware Proj</a>
-                    <div class="desc"> (1) Pawnagotchi - ML based WiFi Pwner<br>(2) LAN Turtle - Pentest Tool<br>(3)
-                        Bjorn - Network Scanner VAS-Offsec Tool<br>(4) BadUSB - USB Keystroke Injecton Pentest Tool
+                <!-- Search Bar -->
+                <div class="blog-search">
+                    <div class="blog-search-wrapper">
+                        <svg>
+                            <use href="#search"></use>
+                        </svg>
+                        <input type="text" id="blog-search-input" placeholder="Search projects..."
+                            aria-label="Search projects">
                     </div>
                 </div>
-            </li>
-        </ul>
 
-        <h2>2024</h2>
-        <ul class="p">
-            <li>
-                <time><span>10</span><span>Oct</span></time>
-                <div>
-                    <a href="https://github.com/Ritesh-Sharma710/">Space Game</a>
-                    <div class="desc"></div>
+                <!-- Category Filters -->
+                <div class="blog-filters" id="blog-filters">
+                    <button class="blog-filter-btn active" data-filter="all">All Projects</button>
+                    <button class="blog-filter-btn" data-filter="2026">2026</button>
+                    <button class="blog-filter-btn" data-filter="2025">2025</button>
+                    <button class="blog-filter-btn" data-filter="2024">2024</button>
+                    <button class="blog-filter-btn" data-filter="hardware">Hardware</button>
                 </div>
-            </li>
-            <li>
-                <time><span>06</span><span>Jun</span></time>
-                <div>
-                    <a href="https://github.com/Ritesh-Sharma710/">Basic Web Server</a>
-                    <div class="desc"></div>
+
+                <!-- Post / Project Count -->
+                <div class="blog-count" id="blog-count">
+                    14 Projects Found
                 </div>
-            </li>
-        </ul>
 
-        <h1>Tech Stack</h1>
-        <ul>
-            <li><strong>Languages:</strong> C, C++, Python, Go, JavaScript, Flutter,</li>
-            <li><strong>Frontend:</strong> React Native,HTML/CSS,Streamlit </li>
-            <li><strong>Backend:</strong> Node.js, Express, FastAPI</li>
-            <li><strong>Databases:</strong> MySQL, SQLite , PostgreSQL</li>
-            <li><strong>DevOps:</strong> Docker, CI/CD, Cloudflare</li>
-            <li><strong>Tools:</strong> Git, Vim, VS Code, Antigravity, Linux(ARCH)</li>
-            <li><strong>Skills:</strong> CyberSecurity, Internet Of Things, Data Science, Compter Networking,
-                DSA</li>
-            <li><strong>Certifications:</strong> Nptel - Wireless Ad Hoc Sensor Networks,<br>Udemy - Flutter
-                Development,<br> CDAC - The Future of UI/UX</li>
-        </ul>
+                <!-- Projects Cards Grid -->
+                <div class="blog-grid" id="blog-grid">
 
+                    <!-- Card 1: Tetromino -->
+                    <article class="blog-card" data-category="2026">
+                        <div class="blog-card-image">
+                            <img src="images/tetris.png" alt="Tetromino game pixel art" loading="lazy">
+                            <span class="blog-card-badge">2026</span>
+                            <span class="blog-card-date">Jul 15, 2026</span>
+                        </div>
+                        <div class="blog-card-body">
+                            <h3 class="blog-card-title"><a href="https://github.com/Ritesh-Sharma710/Terminal-tetris"
+                                    target="_blank" rel="noopener"
+                                    style="color:inherit;text-decoration:none;">Tetromino</a></h3>
+                            <p class="blog-card-excerpt">A feature-complete retro Tetris game written in C#.</p>
+                            <div class="blog-card-meta">
+                                <span>
+                                    <svg>
+                                        <use href="#code"></use>
+                                    </svg> C# / Terminal
+                                </span>
+                            </div>
+                        </div>
+                    </article>
 
+                    <!-- Card 2: Grpc Load Balancer -->
+                    <article class="blog-card" data-category="2026">
+                        <div class="blog-card-image">
+                            <img src="images/loadbalancer.png" alt="gRPC Load Balancer pixel art" loading="lazy">
+                            <span class="blog-card-badge">2026</span>
+                            <span class="blog-card-date">Apr 15, 2026</span>
+                        </div>
+                        <div class="blog-card-body">
+                            <h3 class="blog-card-title"><a href="https://github.com/Ritesh-Sharma710/GRPC_GO"
+                                    target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Grpc Load
+                                    Balancer</a></h3>
+                            <p class="blog-card-excerpt">High-performance gRPC load balancer and reverse proxy built in
+                                Go.</p>
+                            <div class="blog-card-meta">
+                                <span>
+                                    <svg>
+                                        <use href="#code"></use>
+                                    </svg> Go / Systems
+                                </span>
+                            </div>
+                        </div>
+                    </article>
 
+                    <!-- Card 3: Intrusion Detection System (IDS) -->
+                    <article class="blog-card" data-category="2026">
+                        <div class="blog-card-image">
+                            <img src="images/ids.png" alt="IDS pixel art" loading="lazy">
+                            <span class="blog-card-badge">2026</span>
+                            <span class="blog-card-date">Mar 20, 2026</span>
+                        </div>
+                        <div class="blog-card-body">
+                            <h3 class="blog-card-title"><a href="https://github.com/Ritesh-Sharma710/" target="_blank"
+                                    rel="noopener" style="color:inherit;text-decoration:none;">Intrusion Detection
+                                    System (IDS)</a></h3>
+                            <p class="blog-card-excerpt">Logs analysis, real-time intrusion detection, and IP blocking
+                                using Python, R & Snort.</p>
+                            <div class="blog-card-meta">
+                                <span>
+                                    <svg>
+                                        <use href="#code"></use>
+                                    </svg> Python / Security
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 4: Layer2 Switch -->
+                    <article class="blog-card" data-category="2026">
+                        <div class="blog-card-image">
+                            <img src="images/switch.png" alt="Layer2 Switch pixel art" loading="lazy">
+                            <span class="blog-card-badge">2026</span>
+                            <span class="blog-card-date">Mar 25, 2026</span>
+                        </div>
+                        <div class="blog-card-body">
+                            <h3 class="blog-card-title"><a href="https://github.com/Ritesh-Sharma710/layer2_switch"
+                                    target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Layer2
+                                    Switch</a></h3>
+                            <p class="blog-card-excerpt">Data link layer network switch simulation with MAC learning &
+                                frame forwarding.</p>
+                            <div class="blog-card-meta">
+                                <span>
+                                    <svg>
+                                        <use href="#code"></use>
+                                    </svg> Networking / C++
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 5: Bday Greeting Website -->
+                    <article class="blog-card" data-category="2026">
+                        <div class="blog-card-image">
+                            <img src="images/bday.png" alt="Bday Greeting pixel art" loading="lazy">
+                            <span class="blog-card-badge">2026</span>
+                            <span class="blog-card-date">Feb 03, 2026</span>
+                        </div>
+                        <div class="blog-card-body">
+                            <h3 class="blog-card-title"><a href="https://github.com/Ritesh-Sharma710/greetings-wishes"
+                                    target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Bday
+                                    Greeting Website</a></h3>
+                            <p class="blog-card-excerpt">A website to send greetings and wishes to friends and family.
+                            </p>
+                            <div class="blog-card-meta">
+                                <span>
+                                    <svg>
+                                        <use href="#code"></use>
+                                    </svg> JavaScript / Web
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 6: Trekiffy -->
+                    <article class="blog-card" data-category="2025">
+                        <div class="blog-card-image">
+                            <img src="images/pixel_blog_6.png" alt="Trekiffy pixel art" loading="lazy">
+                            <span class="blog-card-badge">2025</span>
+                            <span class="blog-card-date">Dec 11, 2025</span>
+                        </div>
+                        <div class="blog-card-body">
+                            <h3 class="blog-card-title"><a href="https://github.com/Ritesh-Sharma710/" target="_blank"
+                                    rel="noopener" style="color:inherit;text-decoration:none;">Trekiffy</a></h3>
+                            <p class="blog-card-excerpt">My Startup Idea (under development) for trekking enthusiasts.
+                            </p>
+                            <div class="blog-card-meta">
+                                <span>
+                                    <svg>
+                                        <use href="#code"></use>
+                                    </svg> Fullstack / Startup
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 7: Language Agnostic Chatbot -->
+                    <article class="blog-card" data-category="2025">
+                        <div class="blog-card-image">
+                            <img src="images/lang.png" alt="Chatbot pixel art" loading="lazy">
+                            <span class="blog-card-badge">SIH 2025</span>
+                            <span class="blog-card-date">Aug 08, 2025</span>
+                        </div>
+                        <div class="blog-card-body">
+                            <h3 class="blog-card-title"><a
+                                    href="https://github.com/Rachit-Tanwar/SIH2025-language-agnostic-chatbot"
+                                    target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Language
+                                    Agnostic Chatbot</a></h3>
+                            <p class="blog-card-excerpt">(SIH 2025) National-level Hackathon MVP supporting multilingual
+                                query resolution.</p>
+                            <div class="blog-card-meta">
+                                <span>
+                                    <svg>
+                                        <use href="#code"></use>
+                                    </svg> Python / AI
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 8: MIMIR AI Agent -->
+                    <article class="blog-card" data-category="2025">
+                        <div class="blog-card-image">
+                            <img src="images/mimir.png" alt="MIMIR AI Agent pixel art" loading="lazy">
+                            <span class="blog-card-badge">2025</span>
+                            <span class="blog-card-date">Jul 20, 2025</span>
+                        </div>
+                        <div class="blog-card-body">
+                            <h3 class="blog-card-title"><a href="https://github.com/ViditSachdev1412/MIMIR"
+                                    target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">MIMIR AI
+                                    Agent</a></h3>
+                            <p class="blog-card-excerpt">(State Level Hackathon) MVP built with LangChain & Python for
+                                intelligent automation.</p>
+                            <div class="blog-card-meta">
+                                <span>
+                                    <svg>
+                                        <use href="#code"></use>
+                                    </svg> LangChain / Python
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 9: Torrent -->
+                    <article class="blog-card" data-category="2025">
+                        <div class="blog-card-image">
+                            <img src="images/torrent.png" alt="Torrent pixel art" loading="lazy">
+                            <span class="blog-card-badge">2025</span>
+                            <span class="blog-card-date">May 05, 2025</span>
+                        </div>
+                        <div class="blog-card-body">
+                            <h3 class="blog-card-title"><a href="https://github.com/Ritesh-Sharma710/torrent"
+                                    target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Torrent
+                                    Client & Tracker</a></h3>
+                            <p class="blog-card-excerpt">BitTorrent protocol implementation (Client + Tracker + DHT)
+                                using C#.</p>
+                            <div class="blog-card-meta">
+                                <span>
+                                    <svg>
+                                        <use href="#code"></use>
+                                    </svg> C# / P2P Networks
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 10: ZOTACK SHELL -->
+                    <article class="blog-card" data-category="2025">
+                        <div class="blog-card-image">
+                            <img src="images/zotac.png" alt="Zotack Shell pixel art" loading="lazy">
+                            <span class="blog-card-badge">2025</span>
+                            <span class="blog-card-date">May 18, 2025</span>
+                        </div>
+                        <div class="blog-card-body">
+                            <h3 class="blog-card-title"><a href="https://github.com/Ritesh-Sharma710/ZOTACK_SHELL"
+                                    target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">ZOTACK
+                                    SHELL</a></h3>
+                            <p class="blog-card-excerpt">A custom UNIX-like command line shell written in C.</p>
+                            <div class="blog-card-meta">
+                                <span>
+                                    <svg>
+                                        <use href="#code"></use>
+                                    </svg> C / Systems
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 11: Budget Guardians -->
+                    <article class="blog-card" data-category="2025">
+                        <div class="blog-card-image">
+                            <img src="images/pixel_blog_5.png" alt="Budget Guardians pixel art" loading="lazy">
+                            <span class="blog-card-badge">2025</span>
+                            <span class="blog-card-date">Feb 05, 2025</span>
+                        </div>
+                        <div class="blog-card-body">
+                            <h3 class="blog-card-title"><a href="https://github.com/Ritesh-Sharma710/" target="_blank"
+                                    rel="noopener" style="color:inherit;text-decoration:none;">Budget Guardians</a></h3>
+                            <p class="blog-card-excerpt">Personal finance tracking and expense analytics application.
+                            </p>
+                            <div class="blog-card-meta">
+                                <span>
+                                    <svg>
+                                        <use href="#code"></use>
+                                    </svg> Web / Finance
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 12: Cyber Security Hardware Suite -->
+                    <article class="blog-card" data-category="hardware">
+                        <div class="blog-card-image">
+                            <img src="images/hardware.png" alt="Cyber Security Hardware pixel art" loading="lazy">
+                            <span class="blog-card-badge">Hardware</span>
+                            <span class="blog-card-date">Nov 08, 2025</span>
+                        </div>
+                        <div class="blog-card-body">
+                            <h3 class="blog-card-title"><a href="projects.html"
+                                    style="color:inherit;text-decoration:none;">Cyber Security Hardware Suite</a></h3>
+                            <p class="blog-card-excerpt">(1) Pwnagotchi (2) LAN Turtle (3) Bjorn Network Scanner (4)
+                                BadUSB Keystroke Injector.</p>
+                            <div class="blog-card-meta">
+                                <span>
+                                    <svg>
+                                        <use href="#code"></use>
+                                    </svg> IoT / Pentesting
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 13: Space Game -->
+                    <article class="blog-card" data-category="2024">
+                        <div class="blog-card-image">
+                            <img src="images/space.png" alt="Space Game pixel art" loading="lazy">
+                            <span class="blog-card-badge">2024</span>
+                            <span class="blog-card-date">Oct 10, 2024</span>
+                        </div>
+                        <div class="blog-card-body">
+                            <h3 class="blog-card-title"><a href="https://github.com/Ritesh-Sharma710/" target="_blank"
+                                    rel="noopener" style="color:inherit;text-decoration:none;">Space Game</a></h3>
+                            <p class="blog-card-excerpt">Interactive 2D space shooter arcade game.</p>
+                            <div class="blog-card-meta">
+                                <span>
+                                    <svg>
+                                        <use href="#code"></use>
+                                    </svg> Game Dev / JS
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 14: Basic Web Server -->
+                    <article class="blog-card" data-category="2024">
+                        <div class="blog-card-image">
+                            <img src="images/server.png" alt="Basic Web Server pixel art" loading="lazy">
+                            <span class="blog-card-badge">2024</span>
+                            <span class="blog-card-date">Jun 06, 2024</span>
+                        </div>
+                        <div class="blog-card-body">
+                            <h3 class="blog-card-title"><a href="https://github.com/Ritesh-Sharma710/" target="_blank"
+                                    rel="noopener" style="color:inherit;text-decoration:none;">Basic Web Server</a></h3>
+                            <p class="blog-card-excerpt">Custom HTTP web server handling request parsing and routing.
+                            </p>
+                            <div class="blog-card-meta">
+                                <span>
+                                    <svg>
+                                        <use href="#code"></use>
+                                    </svg> C / Networking
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+                <!-- end blog-grid -->
+
+            </div>
+            <!-- end blog-frame -->
+        </div>
+        <!-- end blog-page -->
     </main>
 
     <hr>
 
-    <footer>
-        <span>&copy; The-Syntax-Sage 2026</span>
+    <footer class="site-footer">
+        <span class="site-footer-copy">&copy; 2026 Syntax Sage — The-Syntax-Sage</span>
+        <ul class="site-footer-links">
+            <li><a href="https://github.com/Ritesh-Sharma710" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/ritesh-sharma-3aa43632b" target="_blank"
+                    rel="noopener">LinkedIn</a></li>
+            <li><a href="https://x.com/rizie_rizzler?s=21" target="_blank" rel="noopener">X / Twitter</a></li>
+            <li><a href="index.html">Portfolio</a></li>
+        </ul>
     </footer>
 
     <script src="script.js"></script>
+
+    <!-- Projects filter & search interactivity -->
+    <script>
+        (function () {
+            const filterBtns = document.querySelectorAll('.blog-filter-btn');
+            const cards = document.querySelectorAll('.blog-card');
+            const countEl = document.getElementById('blog-count');
+            const searchInput = document.getElementById('blog-search-input');
+
+            let activeFilter = 'all';
+
+            function updateCount(visible) {
+                if (countEl) {
+                    countEl.textContent = visible + ' Project' + (visible !== 1 ? 's' : '') + ' Found';
+                }
+            }
+
+            function filterAndSearch() {
+                const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+                let visible = 0;
+
+                cards.forEach(card => {
+                    const category = card.getAttribute('data-category');
+                    const title = card.querySelector('.blog-card-title').textContent.toLowerCase();
+                    const excerpt = card.querySelector('.blog-card-excerpt').textContent.toLowerCase();
+
+                    const matchesFilter = activeFilter === 'all' || category === activeFilter;
+                    const matchesSearch = !query || title.includes(query) || excerpt.includes(query);
+
+                    if (matchesFilter && matchesSearch) {
+                        card.style.display = '';
+                        visible++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                updateCount(visible);
+            }
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    activeFilter = this.getAttribute('data-filter');
+                    filterAndSearch();
+                });
+            });
+
+            if (searchInput) {
+                searchInput.addEventListener('input', filterAndSearch);
+            }
+
+            filterAndSearch();
+        })();
+    </script>
 </body>
 
 </html>

@@ -4,64 +4,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio - A fast, ultra-minimal personal portfolio">
-    <meta property="og:title" content="Portfolio">
-    <meta property="og:description" content="A fast, ultra-minimal personal portfolio">
+    <meta name="description" content="Contact — Syntax Sage">
+    <meta property="og:title" content="Contact // Syntax Sage">
+    <meta property="og:description" content="Get in touch with Syntax Sage">
     <meta property="og:type" content="website">
-    <title>Home // Portfolio</title>
+    <title>Contact // Syntax Sage</title>
 
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ===== RETRO CONTACT PAGE TEMPLATE ===== */
+
+        body {
+            max-width: 100%;
+            padding: 0;
+            background: var(--blog-bg);
+            font-family: "Courier New", Courier, monospace;
+        }
+
+        /* Custom color tokens matching demo.html */
+        :root {
+            --blog-bg: #1a1a12;
+            --blog-fg: #c8c0a0;
+            --blog-heading: #d4912a;
+            --blog-subtitle: #a09878;
+            --blog-border: #8a7e5a;
+            --blog-border-dot: #6a6244;
+            --blog-card-border: #3a9bb5;
+            --blog-card-bg: #2a2a1e;
+            --blog-gold-line: #d4912a;
+            --blog-count-fg: #b0a878;
+        }
+
+        html:not(.dk) {
+            --blog-bg: #ffffff;
+            --blog-fg: #2c2818;
+            --blog-heading: #b86810;
+            --blog-subtitle: #5a5030;
+            --blog-border: #d0c8a8;
+            --blog-border-dot: #b0a880;
+            --blog-card-border: #3a9bb5;
+            --blog-card-bg: #ffffff;
+            --blog-gold-line: #b86810;
+            --blog-count-fg: #5a5030;
+        }
+
+        /* Page wrapper with retro dotted border */
+        .blog-page {
+            max-width: 72rem;
+            margin: 0 auto;
+            padding: 1rem;
+            min-height: 100vh;
+        }
+
+        .blog-frame {
+            border: 3px dotted var(--blog-border-dot);
+            padding: 2.5rem 3rem 3.5rem;
+            position: relative;
+        }
+
+        /* Gold accent line at top */
+        .blog-frame::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--blog-gold-line);
+        }
+
+        /* Header Section */
+        .blog-header {
+            text-align: center;
+            padding: 1.5rem 0 2rem;
+            border-bottom: 1px dashed var(--blog-border);
+            margin-bottom: 2.5rem;
+        }
+
+        .blog-header h1 {
+            font-family: "Courier New", Courier, monospace;
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 900;
+            color: var(--blog-heading);
+            letter-spacing: 0.08em;
+            margin: 0 0 0.5rem;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .blog-header .subtitle {
+            font-size: 1rem;
+            color: var(--blog-subtitle);
+            margin-top: 0.5rem;
+            font-style: italic;
+            letter-spacing: 0.03em;
+        }
+
+        /* Retro Form Container */
+        .retro-form-container {
+            max-width: 42rem;
+            margin: 0 auto 2.5rem;
+            background: var(--blog-card-bg);
+            border: 2px solid var(--blog-border);
+            border-radius: 4px;
+            padding: 2rem 2.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--blog-heading);
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--blog-bg);
+            color: var(--blog-fg);
+            border: 2px solid var(--blog-border);
+            font-family: inherit;
+            font-size: 0.92rem;
+            border-radius: 2px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--blog-heading);
+            box-shadow: 0 0 0 2px rgba(212, 145, 42, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .retro-submit-btn {
+            display: inline-block;
+            width: 100%;
+            padding: 0.85rem 1.5rem;
+            background: var(--blog-heading);
+            color: #1a1a12;
+            border: 2px solid var(--blog-heading);
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: bold;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: all 0.2s ease;
+        }
+
+        .retro-submit-btn:hover {
+            background: transparent;
+            color: var(--blog-heading);
+        }
+
+        .retro-section-title {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--blog-heading);
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 2px solid var(--blog-border);
+            text-transform: uppercase;
+        }
+
+        .retro-tags {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            list-style: none;
+            padding: 0;
+            margin-top: 1rem;
+        }
+
+        .retro-tag-btn {
+            display: inline-block;
+            padding: 0.5rem 1.1rem;
+            border: 2px solid var(--blog-border);
+            background: var(--blog-card-bg);
+            color: var(--blog-fg);
+            font-family: inherit;
+            font-size: 0.88rem;
+            text-decoration: none;
+            border-radius: 2px;
+            transition: all 0.2s ease;
+        }
+
+        .retro-tag-btn:hover {
+            border-color: var(--blog-heading);
+            color: var(--blog-heading);
+        }
+
+        /* ASCII Header Overrides */
+        .ascii-header {
+            overflow: hidden;
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        .ascii-header>div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        .ascii-header .site-title pre {
+            font-family: "Courier New", Courier, monospace;
+            font-size: clamp(0.35rem, 1.1vw, 0.9rem);
+            line-height: 1.15;
+            color: var(--title-fg);
+            margin: 0;
+            padding: 0;
+            white-space: pre;
+            display: inline-block;
+            text-align: left;
+        }
+
+        .header-controls {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-top: 0.25rem;
+        }
+
+        nav {
+            padding: 0.5rem 2.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .blog-frame {
+                padding: 1.5rem 1.25rem 2rem;
+            }
+
+            .retro-form-container {
+                padding: 1.5rem 1.25rem;
+            }
+
+            nav {
+                padding: 0.5rem 1rem;
+            }
+        }
+    </style>
 </head>
-<style>
-    /* --- Wider page for ASCII header demo --- */
-    body {
-        max-width: 70rem;
-    }
-
-    /* --- ASCII Header Overrides for demo --- */
-    .ascii-header {
-        overflow: hidden;
-        text-align: center;
-        margin-bottom: 0;
-    }
-
-    .ascii-header>div {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0;
-    }
-
-    .ascii-header .site-title {
-        font-style: normal;
-        font-weight: normal;
-        width: 100%;
-        overflow: hidden;
-    }
-
-    .ascii-header .site-title pre {
-        font-family: "Courier New", Courier, monospace;
-        font-size: clamp(0.35rem, 1.1vw, 0.9rem);
-        line-height: 1.15;
-        color: var(--title-fg);
-        margin: 0;
-        padding: 0;
-        white-space: pre;
-        display: inline-block;
-        text-align: left;
-    }
-
-    .header-controls {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        margin-top: 0.25rem;
-    }
-</style>
-
-<link rel="stylesheet" href="style.css">
-
 
 <body>
     <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
@@ -94,11 +296,6 @@
                 d="M16,2A10,10,0,0,0,6,12a9.19,9.19,0,0,0,3.46,7.62c1,.93,1.54,1.46,1.54,2.38h2c0-1.84-1.11-2.87-2.19-3.86A7.2,7.2,0,0,1,8,12a8,8,0,0,1,16,0,7.2,7.2,0,0,1-2.82,6.14c-1.07,1-2.18,2-2.18,3.86h2c0-.92.53-1.45,1.54-2.39A9.18,9.18,0,0,0,26,12,10,10,0,0,0,16,2Z">
             </path>
         </symbol>
-        <symbol id="search" viewBox="0 0 32 32">
-            <path
-                d="M29,27.5859l-7.5521-7.5521a11.0177,11.0177,0,1,0-1.4141,1.4141L27.5859,29ZM4,13a9,9,0,1,1,9,9A9.01,9.01,0,0,1,4,13Z">
-            </path>
-        </symbol>
         <symbol id="light" viewBox="0 0 32 32">
             <rect x="15" y="2" width="2" height="5"></rect>
             <rect x="21.6675" y="6.8536" width="4.958" height="1.9998"
@@ -119,13 +316,6 @@
                 d="M13.5025,5.4136A15.0755,15.0755,0,0,0,25.096,23.6082a11.1134,11.1134,0,0,1-7.9749,3.3893c-.1385,0-.2782.0051-.4178,0A11.0944,11.0944,0,0,1,13.5025,5.4136M14.98,3a1.0024,1.0024,0,0,0-.1746.0156A13.0959,13.0959,0,0,0,16.63,28.9973c.1641.006.3282,0,.4909,0a13.0724,13.0724,0,0,0,10.702-5.5556,1.0094,1.0094,0,0,0-.7833-1.5644A13.08,13.08,0,0,1,15.8892,4.38,1.0149,1.0149,0,0,0,14.98,3Z">
             </path>
         </symbol>
-        <symbol id="rss" viewBox="0 0 32 32">
-            <path
-                d="M8,18c-3.3,0-6,2.7-6,6s2.7,6,6,6s6-2.7,6-6C14,20.7,11.3,18,8,18z M8,28c-2.2,0-4-1.8-4-4s1.8-4,4-4s4,1.8,4,4C12,26.2,10.2,28,8,28z">
-            </path>
-            <path d="M30,24h-2C28,13,19,4,8,4V2C20.1,2,30,11.9,30,24z"></path>
-            <path d="M22,24h-2c0-6.6-5.4-12-12-12v-2C15.7,10,22,16.3,22,24z"></path>
-        </symbol>
         <symbol id="code" viewBox="0 0 32 32">
             <path d="M31,16l-7,7-1.41-1.41L28.17,16l-5.58-5.59L24,9l7,7z"></path>
             <path d="M1,16l7-7,1.41,1.41L3.83,16l5.58,5.59L8,23L1,16z"></path>
@@ -142,6 +332,7 @@
         </symbol>
     </svg>
 
+    <!-- ===== ASCII Site Header ===== -->
     <header class="ascii-header">
         <div>
             <span class="site-title">
@@ -158,7 +349,7 @@
     \  \::/\__\/         /__/:/\__\/         /__/:/     |__|:|      \  \::/      /__/:/     \  \::/     \  \:\    
      \__\/               \__\/               \__\/       \__\|       \__\/       \__\/       \__\/       \__\/    </pre>
             </span>
-           <div class="header-controls">
+            <div class="header-controls">
                 <a href="#" class="theme" id="theme-toggle" aria-label="Toggle theme">
                     <svg>
                         <use href="#light"></use>
@@ -179,9 +370,9 @@
         </div>
     </header>
 
-
     <hr>
 
+    <!-- ===== Navigation ===== -->
     <nav>
         <a href="index.html" aria-label="Home">
             <svg>
@@ -193,17 +384,16 @@
                 <use href="#code"></use>
             </svg><span class="s">Projects</span>
         </a>
-        <a href="gallery.html" aria-label="Gallery">
-            <svg>
-                <use href="#color-palette"></use>
-            </svg><span class="s">Gallery</span>
-        </a>
         <a href="blogs.html" aria-label="Blogs">
             <svg>
                 <use href="#chat"></use>
             </svg><span class="s">Blogs</span>
         </a>
-
+        <a href="gallery.html" aria-label="Gallery">
+            <svg>
+                <use href="#color-palette"></use>
+            </svg><span class="s">Gallery</span>
+        </a>
         <a href="contact.html" aria-label="Contact" class="active" aria-current="page">
             <svg>
                 <use href="#email"></use>
@@ -213,32 +403,70 @@
 
     <hr>
 
+    <!-- ===== RETRO CONTACT MAIN CONTENT ===== -->
     <main>
-        <h1>Contact</h1>
-        <p>Feel free to reach out! Fill in the form below or connect via the links in the <a href="about.html">About</a>
-            page.</p>
+        <div class="blog-page">
+            <div class="blog-frame">
 
-        <form id="contact-form">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" placeholder="Your name.." required>
+                <!-- Header -->
+                <div class="blog-header">
+                    <h1>Contact</h1>
+                    <p class="subtitle">Feel free to reach out! Fill in the form below or connect directly via social
+                        media and email.</p>
+                </div>
+
+                <!-- Form -->
+                <div class="retro-form-container">
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" placeholder="Your name.." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="riteshdobhal24@gmail.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" placeholder="Your message..." required></textarea>
+                        </div>
+                        <button type="submit" class="retro-submit-btn">Send Message</button>
+                    </form>
+                </div>
+
+                <!-- Social Connect Section -->
+                <h2 class="retro-section-title">Connect Directly</h2>
+                <p style="color: var(--blog-subtitle); margin-bottom: 1rem;">
+                    You can also find me on these networks:
+                </p>
+
+                <ul class="retro-tags">
+                    <li><a href="https://github.com/Ritesh-Sharma710" target="_blank" rel="noopener"
+                            class="retro-tag-btn">GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/in/ritesh-sharma-3aa43632b" target="_blank" rel="noopener"
+                            class="retro-tag-btn">LinkedIn</a></li>
+                    <li><a href="https://x.com/rizie_rizzler?s=21" target="_blank" rel="noopener"
+                            class="retro-tag-btn">Twitter / X</a></li>
+                </ul>
+
             </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="riteshdobhal24@gmail.com" required>
-            </div>
-            <div class="form-group">
-                <label for="message">Message</label>
-                <textarea id="message" name="message" placeholder="Your message..." required></textarea>
-            </div>
-            <button type="submit">Send Message</button>
-        </form>
+            <!-- end blog-frame -->
+        </div>
+        <!-- end blog-page -->
     </main>
 
     <hr>
 
-    <footer>
-        <span>&copy; The-Syntax-Sage 2026</span>
+    <!-- Footer -->
+    <footer class="site-footer">
+        <span class="site-footer-copy">&copy; 2026 Syntax Sage — The-Syntax-Sage</span>
+        <ul class="site-footer-links">
+            <li><a href="https://github.com/Ritesh-Sharma710" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/ritesh-sharma-3aa43632b" target="_blank"
+                    rel="noopener">LinkedIn</a></li>
+            <li><a href="https://x.com/rizie_rizzler?s=21" target="_blank" rel="noopener">X / Twitter</a></li>
+            <li><a href="index.html">Portfolio</a></li>
+        </ul>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>

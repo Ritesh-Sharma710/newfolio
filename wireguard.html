@@ -4,100 +4,271 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="[Blog Post Title Here] - Blog Post Template">
-    <meta property="og:title" content="[Blog Post Title Here]">
-    <meta property="og:description" content="[Short description of the blog post]">
+    <meta name="description"
+        content="Mastering Modern VPNs — A Step-by-Step Guide to Installing and Configuring WireGuard Server & Client Setup">
+    <meta property="og:title" content="Mastering Modern VPNs // Syntax Sage">
+    <meta property="og:description"
+        content="A Step-by-Step Guide to Installing and Configuring WireGuard Server and Client Setup on Ubuntu & WSL Kali">
     <meta property="og:type" content="article">
-    <title>[Blog Post Title Here] // Portfolio</title>
+    <title>Mastering Modern VPNs // Syntax Sage</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ===== RETRO BLOG POST STYLING ===== */
+
+        body {
+            max-width: 100%;
+            padding: 0;
+            background: var(--blog-bg);
+            font-family: "Courier New", Courier, monospace;
+        }
+
+        /* Custom color tokens matching blog_template.html */
+        :root {
+            --blog-bg: #1a1a12;
+            --blog-fg: #c8c0a0;
+            --blog-heading: #d4912a;
+            --blog-subtitle: #a09878;
+            --blog-border: #8a7e5a;
+            --blog-border-dot: #6a6244;
+            --blog-card-border: #3a9bb5;
+            --blog-card-bg: #2a2a1e;
+            --blog-gold-line: #d4912a;
+            --blog-count-fg: #b0a878;
+        }
+
+        html:not(.dk) {
+            --blog-bg: #ffffff;
+            --blog-fg: #2c2818;
+            --blog-heading: #b86810;
+            --blog-subtitle: #5a5030;
+            --blog-border: #d0c8a8;
+            --blog-border-dot: #b0a880;
+            --blog-card-border: #3a9bb5;
+            --blog-card-bg: #ffffff;
+            --blog-gold-line: #b86810;
+            --blog-count-fg: #5a5030;
+        }
+
+        /* Page wrapper with retro dotted border */
+        .blog-page {
+            max-width: 72rem;
+            margin: 0 auto;
+            padding: 1rem;
+            min-height: 100vh;
+        }
+
+        .blog-frame {
+            border: 3px dotted var(--blog-border-dot);
+            padding: 2.5rem 3rem 3.5rem;
+            position: relative;
+        }
+
+        /* Gold accent line at top */
+        .blog-frame::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--blog-gold-line);
+        }
+
+        /* Post Header */
+        .post-header {
+            padding-bottom: 1.75rem;
+            border-bottom: 1px dashed var(--blog-border);
+            margin-bottom: 2rem;
+        }
+
+        .post-header h1 {
+            font-family: "Courier New", Courier, monospace;
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 900;
+            color: var(--blog-heading);
+            letter-spacing: 0.04em;
+            margin: 0 0 1rem;
+            line-height: 1.25;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+            color: var(--blog-subtitle);
+        }
+
+        .post-date-badge {
+            background: var(--blog-card-bg);
+            color: var(--blog-heading);
+            border: 1px solid var(--blog-border);
+            padding: 0.25rem 0.65rem;
+            border-radius: 2px;
+            font-weight: bold;
+        }
+
+        /* Article Content elements */
+        .blog-frame article {
+            color: var(--blog-fg);
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .blog-frame article h2 {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 1.45rem;
+            font-weight: bold;
+            color: var(--blog-heading);
+            margin: 2.2rem 0 1rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 2px solid var(--blog-border);
+            text-transform: uppercase;
+        }
+
+        .blog-frame article h3 {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--blog-fg);
+            margin: 1.8rem 0 0.75rem;
+        }
+
+        .blog-frame article p {
+            margin: 1rem 0;
+        }
+
+        .blog-frame article ul,
+        .blog-frame article ol {
+            margin: 1rem 0 1.5rem 2rem;
+            line-height: 1.75;
+        }
+
+        .blog-frame article li {
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-frame article pre {
+            background: var(--blog-card-bg);
+            border: 2px solid var(--blog-border);
+            padding: 1rem 1.25rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 1.25rem 0;
+        }
+
+        .blog-frame article code {
+            font-family: "Courier New", Courier, monospace;
+            color: var(--blog-heading);
+            font-size: 0.92rem;
+        }
+
+        .post-image-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .post-image {
+            max-width: 100%;
+            height: auto;
+            border: 3px solid var(--blog-card-border);
+            border-radius: 4px;
+            padding: 0.25rem;
+            background: var(--blog-card-bg);
+        }
+
+        .post-image-caption {
+            font-size: 0.85rem;
+            color: var(--blog-subtitle);
+            margin-top: 0.6rem;
+            font-style: italic;
+        }
+
+        .highlight-link {
+            color: var(--blog-heading);
+            font-weight: bold;
+            text-decoration: underline;
+            text-decoration-style: dashed;
+            transition: all 0.2s ease;
+        }
+
+        .highlight-link:hover {
+            color: var(--blog-fg);
+            text-decoration-style: solid;
+        }
+
+        .retro-tag-btn {
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            border: 2px solid var(--blog-border);
+            background: var(--blog-card-bg);
+            color: var(--blog-fg);
+            font-family: inherit;
+            font-size: 0.9rem;
+            text-decoration: none;
+            border-radius: 2px;
+            transition: all 0.2s ease;
+        }
+
+        .retro-tag-btn:hover {
+            border-color: var(--blog-heading);
+            color: var(--blog-heading);
+        }
+
+        /* ASCII Header Overrides */
+        .ascii-header {
+            overflow: hidden;
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        .ascii-header>div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        .ascii-header .site-title pre {
+            font-family: "Courier New", Courier, monospace;
+            font-size: clamp(0.35rem, 1.1vw, 0.9rem);
+            line-height: 1.15;
+            color: var(--title-fg);
+            margin: 0;
+            padding: 0;
+            white-space: pre;
+            display: inline-block;
+            text-align: left;
+        }
+
+        .header-controls {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-top: 0.25rem;
+        }
+
+        nav {
+            padding: 0.5rem 2.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .blog-frame {
+                padding: 1.5rem 1.25rem 2rem;
+            }
+
+            nav {
+                padding: 0.5rem 1rem;
+            }
+        }
+    </style>
 </head>
-<style>
-    /* --- Wider page for ASCII header demo --- */
-    body {
-        max-width: 70rem;
-    }
-
-    /* [UPDATE] ASCII Header — overflow hidden to kill scrollbar */
-    .ascii-header {
-        overflow: hidden;
-        text-align: center;
-        margin-bottom: 0;
-    }
-
-    /* [UPDATE] Changed to column layout — ASCII art on top, controls below */
-    .ascii-header>div {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0;
-    }
-
-    .ascii-header .site-title {
-        font-style: normal;
-        font-weight: normal;
-        width: 100%;
-        overflow: hidden;
-    }
-
-    .ascii-header .site-title pre {
-        font-family: "Courier New", Courier, monospace;
-        font-size: clamp(0.35rem, 1.1vw, 0.9rem);
-        line-height: 1.15;
-        color: var(--title-fg);
-        margin: 0;
-        padding: 0;
-        white-space: pre;
-        display: inline-block;
-        text-align: left;
-    }
-
-    /* [UPDATE] Controls spread apart below ASCII art
-       — theme toggle on left, music toggle on right */
-    .header-controls {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        margin-top: 0.25rem;
-    }
-
-    /* --- Template Specific Styles for Pictures and Links --- */
-    .post-image-container {
-        margin: 2rem 0;
-        text-align: center;
-    }
-
-    .post-image {
-        max-width: 100%;
-        height: auto;
-        border: 2px dashed var(--border);
-        border-radius: 4px;
-        padding: 0.25rem;
-        background: var(--code-bg);
-    }
-
-    .post-image-caption {
-        font-size: 0.85rem;
-        color: var(--desc-fg);
-        margin-top: 0.5rem;
-        font-style: italic;
-    }
-
-    .highlight-link {
-        color: var(--link);
-        font-weight: bold;
-        text-decoration: underline;
-        text-decoration-style: dashed;
-        transition: all 0.2s ease;
-    }
-
-    .highlight-link:hover {
-        color: var(--link-hover);
-        text-decoration-style: solid;
-    }
-</style>
-
-<link rel="stylesheet" href="style.css">
 
 <body>
     <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
@@ -130,11 +301,6 @@
                 d="M16,2A10,10,0,0,0,6,12a9.19,9.19,0,0,0,3.46,7.62c1,.93,1.54,1.46,1.54,2.38h2c0-1.84-1.11-2.87-2.19-3.86A7.2,7.2,0,0,1,8,12a8,8,0,0,1,16,0,7.2,7.2,0,0,1-2.82,6.14c-1.07,1-2.18,2-2.18,3.86h2c0-.92.53-1.45,1.54-2.39A9.18,9.18,0,0,0,26,12,10,10,0,0,0,16,2Z">
             </path>
         </symbol>
-        <symbol id="search" viewBox="0 0 32 32">
-            <path
-                d="M29,27.5859l-7.5521-7.5521a11.0177,11.0177,0,1,0-1.4141,1.4141L27.5859,29ZM4,13a9,9,0,1,1,9,9A9.01,9.01,0,0,1,4,13Z">
-            </path>
-        </symbol>
         <symbol id="light" viewBox="0 0 32 32">
             <rect x="15" y="2" width="2" height="5"></rect>
             <rect x="21.6675" y="6.8536" width="4.958" height="1.9998"
@@ -155,13 +321,6 @@
                 d="M13.5025,5.4136A15.0755,15.0755,0,0,0,25.096,23.6082a11.1134,11.1134,0,0,1-7.9749,3.3893c-.1385,0-.2782.0051-.4178,0A11.0944,11.0944,0,0,1,13.5025,5.4136M14.98,3a1.0024,1.0024,0,0,0-.1746.0156A13.0959,13.0959,0,0,0,16.63,28.9973c.1641.006.3282,0,.4909,0a13.0724,13.0724,0,0,0,10.702-5.5556,1.0094,1.0094,0,0,0-.7833-1.5644A13.08,13.08,0,0,1,15.8892,4.38,1.0149,1.0149,0,0,0,14.98,3Z">
             </path>
         </symbol>
-        <symbol id="rss" viewBox="0 0 32 32">
-            <path
-                d="M8,18c-3.3,0-6,2.7-6,6s2.7,6,6,6s6-2.7,6-6C14,20.7,11.3,18,8,18z M8,28c-2.2,0-4-1.8-4-4s1.8-4,4-4s4,1.8,4,4C12,26.2,10.2,28,8,28z">
-            </path>
-            <path d="M30,24h-2C28,13,19,4,8,4V2C20.1,2,30,11.9,30,24z"></path>
-            <path d="M22,24h-2c0-6.6-5.4-12-12-12v-2C15.7,10,22,16.3,22,24z"></path>
-        </symbol>
         <symbol id="code" viewBox="0 0 32 32">
             <path d="M31,16l-7,7-1.41-1.41L28.17,16l-5.58-5.59L24,9l7,7z"></path>
             <path d="M1,16l7-7,1.41,1.41L3.83,16l5.58,5.59L8,23L1,16z"></path>
@@ -176,18 +335,9 @@
                 d="M28,6H4A2,2,0,0,0,2,8V24a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V8A2,2,0,0,0,28,6Zm0,2V9.46l-12,8-12-8V8ZM4,24V12.54l11.43,7.62a1,1,0,0,0,1.14,0L28,12.54V24Z">
             </path>
         </symbol>
-        <!-- [UPDATE] Music toggle SVG icons (volume on / off) -->
-        <symbol id="volume-on" viewBox="0 0 32 32">
-            <path d="M23.41,25.25a1,1,0,0,1-.71-.29,1,1,0,0,1,0-1.42,8.58,8.58,0,0,0,0-12.13,1,1,0,0,1,1.41-1.41,10.58,10.58,0,0,1,0,14.96A1,1,0,0,1,23.41,25.25Z"></path>
-            <path d="M21,22.74a1,1,0,0,1-.71-.3,1,1,0,0,1,0-1.41,4.57,4.57,0,0,0,0-6.47,1,1,0,0,1,1.41-1.41,6.57,6.57,0,0,1,0,9.29A1,1,0,0,1,21,22.74Z"></path>
-            <path d="M18,28a1,1,0,0,1-.62-.22L9.56,21H4a1,1,0,0,1-1-1V12a1,1,0,0,1,1-1H9.56l7.82-6.78A1,1,0,0,1,19,5V27a1,1,0,0,1-.58.91A1,1,0,0,1,18,28ZM5,19h5a1,1,0,0,1,.62.22L17,24.18V7.82L10.62,12.78A1,1,0,0,1,10,13H5Z"></path>
-        </symbol>
-        <symbol id="volume-off" viewBox="0 0 32 32">
-            <path d="M31,12.41,29.59,11,26,14.59,22.41,11,21,12.41,24.59,16,21,19.59,22.41,21,26,17.41,29.59,21,31,19.59,27.41,16Z"></path>
-            <path d="M18,28a1,1,0,0,1-.62-.22L9.56,21H4a1,1,0,0,1-1-1V12a1,1,0,0,1,1-1H9.56l7.82-6.78A1,1,0,0,1,19,5V27a1,1,0,0,1-.58.91A1,1,0,0,1,18,28ZM5,19h5a1,1,0,0,1,.62.22L17,24.18V7.82L10.62,12.78A1,1,0,0,1,10,13H5Z"></path>
-        </symbol>
     </svg>
 
+    <!-- ===== ASCII Site Header ===== -->
     <header class="ascii-header">
         <div>
             <span class="site-title">
@@ -204,7 +354,6 @@
     \  \::/\__\/         /__/:/\__\/         /__/:/     |__|:|      \  \::/      /__/:/     \  \::/     \  \:\    
      \__\/               \__\/               \__\/       \__\|       \__\/       \__\/       \__\/       \__\/    </pre>
             </span>
-            <!-- [UPDATE] Header controls: theme toggle + music toggle -->
             <div class="header-controls">
                 <a href="#" class="theme" id="theme-toggle" aria-label="Toggle theme">
                     <svg>
@@ -228,6 +377,7 @@
 
     <hr>
 
+    <!-- ===== Navigation ===== -->
     <nav>
         <a href="index.html" aria-label="Home">
             <svg>
@@ -239,15 +389,15 @@
                 <use href="#code"></use>
             </svg><span class="s">Projects</span>
         </a>
+        <a href="blogs.html" aria-label="Blogs">
+            <svg>
+                <use href="#chat"></use>
+            </svg><span class="s">Blogs</span>
+        </a>
         <a href="gallery.html" aria-label="Gallery">
             <svg>
                 <use href="#color-palette"></use>
             </svg><span class="s">Gallery</span>
-        </a>
-        <a href="blogs.html" aria-label="Blogs" class="active" aria-current="page">
-            <svg>
-                <use href="#chat"></use>
-            </svg><span class="s">Blogs</span>
         </a>
         <a href="contact.html" aria-label="Contact">
             <svg>
@@ -258,43 +408,206 @@
 
     <hr>
 
+    <!-- ===== RETRO BLOG POST MAIN CONTENT ===== -->
     <main>
-       
-        <article style="margin: 2rem 0; line-height: 1.8;">
-            <h1>Mastering Modern VPNs : A Step-by-Step Guide to Installing and Configuring WireGuard </h1>
-            <p>
-                <time style="display: inline-block; background: var(--tag-bg); color: var(--tag-fg); padding: 0.2rem 0.6rem; border-radius: 3px; font-size: 0.8rem; margin-bottom: 1.5rem;">[Date Here, e.g. 02 Jul 2026]</time>
-            </p>
+        <div class="blog-page">
+            <div class="blog-frame">
 
-            <p>This is the first introductory paragraph. You can start introducing the topic of your blog post here. Below, we'll demonstrate how to insert a link and an image with clean minimal styling.</p>
+                <article>
+                    <!-- Post Header -->
+                    <header class="post-header">
+                        <h1>How I Configured WireGuard VPN from Scratch: Server & Client Setup</h1>
+                        <div class="post-meta">
+                            <span class="post-date-badge">02 Jul 2026</span>
+                            <span>By The-Syntax-Sage</span>
+                            <span>&bull;</span>
+                            <span>Networking / Security</span>
+                        </div>
+                    </header>
 
-            <p>For highlighting important external links or references, you can use the class <code>highlight-link</code>. For example, here is a link to <a href="https://example.com" class="highlight-link" target="_blank" rel="noopener">Example Website</a> for reference.</p>
+                    <p>So, I recently got my hands on a completely fresh Ubuntu 24.04 VPS and decided it was the perfect
+                        playground to set up my own secure, high-performance VPN tunnel. If you've been reading up on
+                        modern networking, you already know that WireGuard is the absolute gold standard right now—it's
+                        insanely fast, lightweight, and way simpler than old-school protocols like OpenVPN.</p>
 
-            <!-- IMAGE REFERENCE CONTAINER -->
-            <div class="post-image-container">
-                <!-- Replace 'placeholder-url.jpg' with your actual image path -->
-                <img class="post-image" src="https://via.placeholder.com/800x400" alt="Descriptive alt text for the image">
-                <div class="post-image-caption">Figure 1: This is a customizable image caption explaining the graphic above.</div>
+                    <!-- Top Cover Image -->
+                    <div class="post-image-container">
+                        <img class="post-image" src="images/wireguard/1.png" alt="WireGuard Terminal Setup">
+                        <div class="post-image-caption">Figure 1: Initial terminal environment setup for WireGuard
+                            deployment.</div>
+                    </div>
+
+                    <h2>The Objective</h2>
+                    <ol>
+                        <li>Deploy a fully functioning WireGuard server on an <strong>Ubuntu 24.04 VPS</strong>.</li>
+                        <li>Configure the server interface subnet on <code>10.100.0.1/24</code>.</li>
+                        <li>Connect my local machine running <strong>WSL Kali Linux</strong> as a secure peer.</li>
+                        <li>Verify a working cryptographic handshake from both endpoints using <code>wg show</code>.
+                        </li>
+                    </ol>
+
+                    <h2>Step-by-Step Implementation</h2>
+
+                    <h3>Step 1: Gaining Access and Prepping the Systems</h3>
+                    <p>First things first, I needed to log into the remote server. I was given the VPS IP address and
+                        the corresponding SSH Private Key.</p>
+                    <p>To get things moving, I opened up VIM on my local environment, created a file named
+                        <code>wireguard_key</code>, and pasted the private key contents right in. Because SSH is super
+                        strict about file permissions, I immediately dropped into the terminal and locked it down:
+                    </p>
+
+                    <pre><code>chmod 600 wireguard_key</code></pre>
+
+                    <p>With permissions sorted out, I initiated the connection:</p>
+                    <pre><code>ssh -i wireguard_key ubuntu@&lt;vps-ip&gt;</code></pre>
+                    <p><em>Boom, success! I was in.</em></p>
+
+                    <div class="post-image-container">
+                        <img class="post-image" src="images/wireguard/2.png" alt="Package updating on VPS">
+                        <div class="post-image-caption">Figure 2: System update and workspace preparation on Ubuntu VPS.
+                        </div>
+                    </div>
+
+                    <p>Before installing any new packages, it's always best practice to pull down the latest package
+                        updates. I split my workspace into two terminal views—one for the remote VPS and another for my
+                        local WSL Kali Linux—and upgraded both environments simultaneously:</p>
+                    <pre><code>sudo apt update && sudo apt upgrade -y</code></pre>
+
+                    <h3>Step 2: Installing WireGuard and Generating Keys</h3>
+                    <p>Next up came the actual installation. WireGuard is baked right into the standard Ubuntu and Kali
+                        repositories, so setting it up on both sides was dead simple:</p>
+                    <pre><code>sudo apt install wireguard -y</code></pre>
+
+                    <div class="post-image-container">
+                        <img class="post-image" src="images/wireguard/4.png" alt="Generating WireGuard Key Pairs">
+                        <div class="post-image-caption">Figure 3: Generating cryptographic key pairs using wg genkey.
+                        </div>
+                    </div>
+
+                    <p>WireGuard relies on asymmetric cryptography, meaning both the server and client need their own
+                        unique private and public key pairs to authenticate each other securely. I used the built-in
+                        <code>wg genkey</code> utility to generate these pairs, piping the private keys directly into
+                        the public key generators:
+                    </p>
+                    <pre><code>wg genkey | tee privatekey | wg pubkey > publickey</code></pre>
+                    <p>I carefully ran this on both sides, grabbed the strings using <code>cat privatekey</code> and
+                        <code>cat publickey</code>, and temporarily saved them to my desktop directory so I could swap
+                        them into the configuration templates.
+                    </p>
+
+                    <h3>Step 3: Spinning Up the Server Profile</h3>
+                    <p>With keys ready, it was time to build the server configuration block. I fired up VIM to create
+                        the interface layout file:</p>
+                    <pre><code>sudo vim /etc/wireguard/wg0.conf</code></pre>
+
+                    <div class="post-image-container">
+                        <img class="post-image" src="images/wireguard/5.png" alt="Server wg0.conf configuration file">
+                        <div class="post-image-caption">Figure 4: WireGuard server interface configuration file
+                            (wg0.conf).</div>
+                    </div>
+
+                    <p>Inside, I bound the server interface to the requested IP <code>10.100.0.1/24</code> and specified
+                        the standard listening port <code>51820</code>. I also declared my local Kali machine as an
+                        authorized peer, using the client's public key and setting up the allowed IP routing space.
+                        After checking everything over, I saved and exited using <code>:wq</code>.</p>
+
+                    <div class="post-image-container">
+                        <img class="post-image" src="images/wireguard/6.png"
+                            alt="Initializing systemd unit for WireGuard">
+                        <div class="post-image-caption">Figure 5: Initializing systemd service for wireguard interface.
+                        </div>
+                    </div>
+
+                    <p>To bring the virtual interface online and make sure it automatically kicks off whenever the
+                        server reboots, I initialized the systemd unit files:</p>
+                    <pre><code>sudo systemctl enable wg-quick@wg0
+sudo systemctl start wg-quick@wg0
+sudo systemctl status wg-quick@wg0</code></pre>
+                    <p><em>(Tip: For quick testing cycles, you can also just use <code>sudo wg-quick up wg0</code> to
+                            spin it up immediately!)</em></p>
+
+                    <h3>Step 4: Aligning the Client Configuration (WSL Kali)</h3>
+                    <p>Switching over to my second terminal tab for local configurations, I opened up a mirror file
+                        structure on the Kali Linux environment:</p>
+                    <pre><code>sudo vim /etc/wireguard/wg0.conf</code></pre>
+
+                    <div class="post-image-container">
+                        <img class="post-image" src="images/wireguard/7.png" alt="Client wg0.conf on Kali Linux">
+                        <div class="post-image-caption">Figure 6: Client configuration block on WSL Kali Linux.</div>
+                    </div>
+
+                    <p>Here, I assigned the client its own unique internal tunnel IP (like <code>10.100.0.2/24</code>),
+                        populated its local private key, and pointed the outbound endpoint directly at the remote VPS IP
+                        address on port <code>51820</code>. To ensure the route handles internet traffic properly, I set
+                        the <code>AllowedIPs</code> scope to <code>0.0.0.0/0</code>. I closed out VIM with another quick
+                        <code>:wq</code> and spun the client interface up:
+                    </p>
+                    <pre><code>sudo wg-quick up wg0</code></pre>
+
+                    <h3>Step 5: Firewalls, Routing, and Handshake Verification</h3>
+                    <p>To allow the inbound tunnel packets to actually hit the WireGuard service without getting dropped
+                        at the border, I adjusted the Uncomplicated Firewall (UFW) rules on the server:</p>
+                    <pre><code>sudo ufw allow 51820/udp</code></pre>
+
+                    <p>I also verified if IPv4 packet forwarding was active at the kernel level so traffic could
+                        properly route through the interface:</p>
+                    <pre><code>cat /proc/sys/net/ipv4/ip_forward</code></pre>
+
+                    <div class="post-image-container">
+                        <img class="post-image" src="images/wireguard/8.png"
+                            alt="wg show output showing active handshake">
+                        <div class="post-image-caption">Figure 7: Verifying active WireGuard session and cryptographic
+                            handshake using wg show.</div>
+                    </div>
+
+                    <p>Finally, it was time for the moment of truth. To make sure the encrypted tunnel was actively
+                        passing traffic back and forth, I checked the status utility on both sides:</p>
+                    <pre><code>wg show</code></pre>
+
+                    <p>Looking at the output on both the server and client terminals, the peer entries matched cleanly,
+                        showing active session timers, data transfer rates, and a fresh, successful cryptographic
+                        handshake!</p>
+
+                    <p><strong>OVERALL STATUS: SUCCESS </strong></p>
+
+                    <h2>Lessons & Deep-Dive Discoveries</h2>
+                    <ul>
+                        <li><strong>Automated Install Wizards:</strong> While manually spinning up interfaces and
+                            mapping configs is an awesome way to truly understand what's happening under the hood, I
+                            discovered during my research that there are automated Git repository setup wizards out
+                            there that can deploy entire multi-peer infrastructures in seconds.</li>
+                        <li><strong>Global Routing:</strong> Setting the routing configuration to <code>0.0.0.0/0</code>
+                            forces all client traffic directly through our secure VPS endpoint.</li>
+                        <li><strong>Persistent Connections:</strong> To prevent stateful NAT firewalls or home routers
+                            from dropping the connection during idle periods, I explicitly threw
+                            <code>PersistentKeepalive = 25</code> into the configuration block—keeping the tunnel
+                            persistently alive and humming every 25 seconds!
+                        </li>
+                    </ul>
+
+                    <p style="margin-top: 3rem;">
+                        <a href="blogs.html" class="retro-tag-btn">&larr; Back to Blogs</a>
+                    </p>
+                </article>
+
             </div>
-
-            <p>Here is another paragraph of text following the image. The image automatically styles itself with a dashed border to match the terminal theme, along with a clean background padding.</p>
-
-            <h2>Section Heading</h2>
-            <p>You can add section headings using the <code>&lt;h2&gt;</code> element to structure your content. Text will automatically wrap and scale properly on both mobile devices and desktop views.</p>
-
-            <p>Another paragraph can go here. Feel free to duplicate paragraphs, insert links, or add more images as needed using the structure provided in this file.</p>
-
-            <p style="margin-top: 3rem;">
-                <a href="blogs.html" class="btn">&larr; Back to Blogs</a>
-            </p>
-        </article>
+            <!-- end blog-frame -->
+        </div>
+        <!-- end blog-page -->
     </main>
 
     <hr>
 
-    <!-- [UPDATE] Cleaned footer — centered copyright only -->
-    <footer>
-        <span>&copy; The-Syntax-Sage 2026</span>
+    <!-- Footer -->
+    <footer class="site-footer">
+        <span class="site-footer-copy">&copy; 2026 Syntax Sage — The-Syntax-Sage</span>
+        <ul class="site-footer-links">
+            <li><a href="https://github.com/Ritesh-Sharma710" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/ritesh-sharma-3aa43632b" target="_blank"
+                    rel="noopener">LinkedIn</a></li>
+            <li><a href="https://x.com/rizie_rizzler?s=21" target="_blank" rel="noopener">X / Twitter</a></li>
+            <li><a href="index.html">Portfolio</a></li>
+        </ul>
     </footer>
 
     <script src="script.js"></script>

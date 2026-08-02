@@ -77,16 +77,12 @@
 
     // --- Contact Form Handler (EmailJS) ---
     // =============================================
-    // REPLACE THESE WITH YOUR REAL EMAILJS CREDENTIALS:
-    // 1. Sign up at https://www.emailjs.com/
-    // 2. Add an Email Service (Gmail, Outlook, etc.)
-    // 3. Create an Email Template with variables:
-    //    {{from_name}}, {{from_email}}, {{message}}
-    // 4. Copy your Public Key from Account > General
+    // EmailJS credentials (client-side safe — rate-limited by EmailJS)
+    // Manage at: https://dashboard.emailjs.com/
     // =============================================
-    const EMAILJS_PUBLIC_KEY = process.env.EMAILJS_PUBLIC_KEY;
-    const EMAILJS_SERVICE_ID = process.env.EMAILJS_SERVICE_ID;
-    const EMAILJS_TEMPLATE_ID = process.env.EMAILJS_TEMPLATE_ID;
+    const EMAILJS_PUBLIC_KEY = '2KQ9IF7J-8fn_mtYq';
+    const EMAILJS_SERVICE_ID = 'service_kt5xl6x';
+    const EMAILJS_TEMPLATE_ID = 'template_skhuhwk';
 
     // Initialize EmailJS
     if (typeof emailjs !== 'undefined') {

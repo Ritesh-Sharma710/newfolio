@@ -4,64 +4,290 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio - A fast, ultra-minimal personal portfolio">
-    <meta property="og:title" content="Portfolio">
-    <meta property="og:description" content="A fast, ultra-minimal personal portfolio">
+    <meta name="description" content="Portfolio — Syntax Sage Retro Demo 3">
+    <meta property="og:title" content="Portfolio // Syntax Sage">
+    <meta property="og:description" content="A fast, ultra-minimal retro styled personal portfolio">
     <meta property="og:type" content="website">
-    <title>Home // Portfolio</title>
+    <title>Portfolio Template // Syntax Sage</title>
 
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ===== DEMO PAGE 3 — RETRO TEMPLATE WITHOUT SEARCH ===== */
+
+        body {
+            max-width: 100%;
+            padding: 0;
+            background: var(--blog-bg);
+            font-family: "Courier New", Courier, monospace;
+        }
+
+        /* Custom color tokens matching demo.html */
+        :root {
+            --blog-bg: #1a1a12;
+            --blog-fg: #c8c0a0;
+            --blog-heading: #d4912a;
+            --blog-subtitle: #a09878;
+            --blog-border: #8a7e5a;
+            --blog-border-dot: #6a6244;
+            --blog-card-border: #3a9bb5;
+            --blog-card-bg: #2a2a1e;
+            --blog-gold-line: #d4912a;
+            --blog-count-fg: #b0a878;
+        }
+
+        html:not(.dk) {
+            --blog-bg: #ffffff;
+            --blog-fg: #2c2818;
+            --blog-heading: #b86810;
+            --blog-subtitle: #5a5030;
+            --blog-border: #d0c8a8;
+            --blog-border-dot: #b0a880;
+            --blog-card-border: #3a9bb5;
+            --blog-card-bg: #ffffff;
+            --blog-gold-line: #b86810;
+            --blog-count-fg: #5a5030;
+        }
+
+        /* Page wrapper with retro dotted border */
+        .blog-page {
+            max-width: 72rem;
+            margin: 0 auto;
+            padding: 1rem;
+            min-height: 100vh;
+        }
+
+        .blog-frame {
+            border: 3px dotted var(--blog-border-dot);
+            padding: 2.5rem 3rem 3.5rem;
+            position: relative;
+        }
+
+        /* Gold accent line at top */
+        .blog-frame::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--blog-gold-line);
+        }
+
+        /* Retro Main Hero & Content Styling */
+        .retro-hero {
+            padding-bottom: 2rem;
+            border-bottom: 1px dashed var(--blog-border);
+            margin-bottom: 2.5rem;
+        }
+
+        .retro-hero h1 {
+            font-family: "Courier New", Courier, monospace;
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 900;
+            color: var(--blog-heading);
+            letter-spacing: 0.08em;
+            margin: 0 0 1rem;
+            line-height: 1.15;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .retro-hero p {
+            font-size: 1.05rem;
+            color: var(--blog-fg);
+            line-height: 1.7;
+            max-width: 52rem;
+            margin: 0;
+        }
+
+        .retro-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .retro-section h2 {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--blog-heading);
+            letter-spacing: 0.05em;
+            margin-top: 0;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 2px solid var(--blog-border);
+            text-transform: uppercase;
+        }
+
+        .retro-section p {
+            font-size: 0.95rem;
+            line-height: 1.65;
+            color: var(--blog-fg);
+        }
+
+        /* Retro List Layout for Featured Projects & Publications */
+        .retro-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 2rem;
+        }
+
+        .retro-list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 1rem;
+            margin-bottom: 0.85rem;
+            background: var(--blog-card-bg);
+            border: 2px solid var(--blog-border);
+            border-radius: 3px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .retro-list-item:hover {
+            transform: translateX(4px);
+            border-color: var(--blog-heading);
+        }
+
+        .retro-time {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 4rem;
+            padding: 0.4rem 0.6rem;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--blog-border-dot);
+            color: var(--blog-heading);
+            font-weight: bold;
+            font-size: 0.85rem;
+            text-align: center;
+            border-radius: 2px;
+        }
+
+        .retro-item-content {
+            flex: 1;
+        }
+
+        .retro-item-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin: 0 0 0.35rem;
+        }
+
+        .retro-item-title a {
+            color: var(--blog-fg);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .retro-item-title a:hover {
+            color: var(--blog-heading);
+            text-decoration: underline;
+        }
+
+        .retro-item-desc {
+            font-size: 0.88rem;
+            color: var(--blog-subtitle);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Tags list */
+        .retro-tags {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            list-style: none;
+            padding: 0;
+            margin-top: 1rem;
+        }
+
+        .retro-tag-btn {
+            display: inline-block;
+            padding: 0.45rem 1rem;
+            border: 2px solid var(--blog-border);
+            background: var(--blog-card-bg);
+            color: var(--blog-fg);
+            font-family: inherit;
+            font-size: 0.85rem;
+            text-decoration: none;
+            border-radius: 2px;
+            transition: all 0.2s ease;
+        }
+
+        .retro-tag-btn:hover {
+            border-color: var(--blog-heading);
+            color: var(--blog-heading);
+        }
+
+        /* ASCII Header Overrides */
+        .ascii-header {
+            overflow: hidden;
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        .ascii-header>div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        .ascii-header .site-title {
+            font-style: normal;
+            font-weight: normal;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .ascii-header .site-title pre {
+            font-family: "Courier New", Courier, monospace;
+            font-size: clamp(0.35rem, 1.1vw, 0.9rem);
+            line-height: 1.15;
+            color: var(--title-fg);
+            margin: 0;
+            padding: 0;
+            white-space: pre;
+            display: inline-block;
+            text-align: left;
+        }
+
+        .header-controls {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-top: 0.25rem;
+        }
+
+        nav {
+            padding: 0.5rem 2.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .blog-frame {
+                padding: 1.5rem 1.25rem 2rem;
+            }
+
+            .retro-list-item {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .retro-time {
+                align-self: flex-start;
+                flex-direction: row;
+                gap: 0.4rem;
+                min-width: auto;
+            }
+
+            nav {
+                padding: 0.5rem 1rem;
+            }
+        }
+    </style>
 </head>
-<style>
-    /* --- Wider page for ASCII header demo --- */
-    body {
-        max-width: 70rem;
-    }
-
-    /* --- ASCII Header Overrides for demo --- */
-    .ascii-header {
-        overflow: hidden;
-        text-align: center;
-        margin-bottom: 0;
-    }
-
-    .ascii-header>div {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0;
-    }
-
-    .ascii-header .site-title {
-        font-style: normal;
-        font-weight: normal;
-        width: 100%;
-        overflow: hidden;
-    }
-
-    .ascii-header .site-title pre {
-        font-family: "Courier New", Courier, monospace;
-        font-size: clamp(0.35rem, 1.1vw, 0.9rem);
-        line-height: 1.15;
-        color: var(--title-fg);
-        margin: 0;
-        padding: 0;
-        white-space: pre;
-        display: inline-block;
-        text-align: left;
-    }
-
-    .header-controls {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        margin-top: 0.25rem;
-    }
-</style>
-
-<link rel="stylesheet" href="style.css">
-
 
 <body>
     <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
@@ -94,11 +320,6 @@
                 d="M16,2A10,10,0,0,0,6,12a9.19,9.19,0,0,0,3.46,7.62c1,.93,1.54,1.46,1.54,2.38h2c0-1.84-1.11-2.87-2.19-3.86A7.2,7.2,0,0,1,8,12a8,8,0,0,1,16,0,7.2,7.2,0,0,1-2.82,6.14c-1.07,1-2.18,2-2.18,3.86h2c0-.92.53-1.45,1.54-2.39A9.18,9.18,0,0,0,26,12,10,10,0,0,0,16,2Z">
             </path>
         </symbol>
-        <symbol id="search" viewBox="0 0 32 32">
-            <path
-                d="M29,27.5859l-7.5521-7.5521a11.0177,11.0177,0,1,0-1.4141,1.4141L27.5859,29ZM4,13a9,9,0,1,1,9,9A9.01,9.01,0,0,1,4,13Z">
-            </path>
-        </symbol>
         <symbol id="light" viewBox="0 0 32 32">
             <rect x="15" y="2" width="2" height="5"></rect>
             <rect x="21.6675" y="6.8536" width="4.958" height="1.9998"
@@ -119,13 +340,6 @@
                 d="M13.5025,5.4136A15.0755,15.0755,0,0,0,25.096,23.6082a11.1134,11.1134,0,0,1-7.9749,3.3893c-.1385,0-.2782.0051-.4178,0A11.0944,11.0944,0,0,1,13.5025,5.4136M14.98,3a1.0024,1.0024,0,0,0-.1746.0156A13.0959,13.0959,0,0,0,16.63,28.9973c.1641.006.3282,0,.4909,0a13.0724,13.0724,0,0,0,10.702-5.5556,1.0094,1.0094,0,0,0-.7833-1.5644A13.08,13.08,0,0,1,15.8892,4.38,1.0149,1.0149,0,0,0,14.98,3Z">
             </path>
         </symbol>
-        <symbol id="rss" viewBox="0 0 32 32">
-            <path
-                d="M8,18c-3.3,0-6,2.7-6,6s2.7,6,6,6s6-2.7,6-6C14,20.7,11.3,18,8,18z M8,28c-2.2,0-4-1.8-4-4s1.8-4,4-4s4,1.8,4,4C12,26.2,10.2,28,8,28z">
-            </path>
-            <path d="M30,24h-2C28,13,19,4,8,4V2C20.1,2,30,11.9,30,24z"></path>
-            <path d="M22,24h-2c0-6.6-5.4-12-12-12v-2C15.7,10,22,16.3,22,24z"></path>
-        </symbol>
         <symbol id="code" viewBox="0 0 32 32">
             <path d="M31,16l-7,7-1.41-1.41L28.17,16l-5.58-5.59L24,9l7,7z"></path>
             <path d="M1,16l7-7,1.41,1.41L3.83,16l5.58,5.59L8,23L1,16z"></path>
@@ -142,6 +356,7 @@
         </symbol>
     </svg>
 
+    <!-- ===== ASCII Site Header ===== -->
     <header class="ascii-header">
         <div>
             <span class="site-title">
@@ -179,11 +394,11 @@
         </div>
     </header>
 
-
     <hr>
 
+    <!-- ===== Navigation ===== -->
     <nav>
-        <a href="index.html" aria-label="Home" class="active" aria-current="page">
+        <a href="index.html" aria-label="Home">
             <svg>
                 <use href="#home"></use>
             </svg><span class="s">Home</span>
@@ -193,17 +408,16 @@
                 <use href="#code"></use>
             </svg><span class="s">Projects</span>
         </a>
-        <a href="gallery.html" aria-label="Gallery">
-            <svg>
-                <use href="#color-palette"></use>
-            </svg><span class="s">Gallery</span>
-        </a>
         <a href="blogs.html" aria-label="Blogs">
             <svg>
                 <use href="#chat"></use>
             </svg><span class="s">Blogs</span>
         </a>
-
+        <a href="gallery.html" aria-label="Gallery">
+            <svg>
+                <use href="#color-palette"></use>
+            </svg><span class="s">Gallery</span>
+        </a>
         <a href="contact.html" aria-label="Contact">
             <svg>
                 <use href="#email"></use>
@@ -213,92 +427,149 @@
 
     <hr>
 
+    <!-- ===== RETRO DEMO 3 MAIN CONTENT ===== -->
     <main>
-        <h1>Building the Unknown.</h1>
-        <p>
-            I believe in the power of clean code, user-centric design,
-            continuous learning and strive to bring excellence to every endeavor.
-        </p>
+        <div class="blog-page">
+            <div class="blog-frame">
 
-        <h2>Featured Projects</h2>
-        <ul class="p">
-            <li>
-                <time><span>01</span><span>2026</span></time>
-                <div>
-                    <a href="https://github.com/Ritesh-Sharma710/ZOTACK_SHELL">Zotack_Shell</a>
-
-            </li>
-            <li>
-                <time><span>12</span><span>2025</span></time>
-                <div>
-                    <a href="https://github.com/Ritesh-Sharma710/layer2_switch">layer2_switch</a>
-
-            </li>
-            <li>
-                <time><span>08</span><span>2025</span></time>
-                <div>
-                    <a href="projects.html">Intrusion Detection System</a>
-
-            </li>
-        </ul>
-
-        <h1>Patents and Publications</h1>
-
-        <h2>2026</h2>
-        <ul class="p" id="search-results">
-            <li>
-                <time><span>15</span><span>Apr</span></time>
-                <div>
-                    <a href=""></a>
-                    <div class="desc">Automated Real-Time Vehicle Emission Monitoring and Iot-Based Certification System
-                    </div>
+                <!-- Hero Section -->
+                <div class="retro-hero">
+                    <h1>Building the Unknown.</h1>
+                    <p>
+                        I believe in the power of clean code, user-centric design, continuous learning, and strive to
+                        bring excellence to every endeavor.
+                    </p>
                 </div>
-            </li>
 
-            <ul class="p" id="search-results">
-                <li>
-                    <time><span>15</span><span>May</span></time>
-                    <div>
-                        <a href=""></a>
-                        <div class="desc"></div>
-                    </div>
-                </li>
+                <!-- Featured Projects Section -->
+                <div class="retro-section">
+                    <h2>Featured Projects</h2>
+                    <ul class="retro-list">
+                        <li class="retro-list-item">
+                            <div class="retro-time">
+                                <span>01</span>
+                                <span>2026</span>
+                            </div>
+                            <div class="retro-item-content">
+                                <h3 class="retro-item-title">
+                                    <a href="https://github.com/Ritesh-Sharma710/ZOTACK_SHELL" target="_blank"
+                                        rel="noopener">Zotack_Shell</a>
+                                </h3>
+                                <p class="retro-item-desc">A lightweight, custom UNIX-like command line shell interface
+                                    written in C.</p>
+                            </div>
+                        </li>
+                        <li class="retro-list-item">
+                            <div class="retro-time">
+                                <span>12</span>
+                                <span>2025</span>
+                            </div>
+                            <div class="retro-item-content">
+                                <h3 class="retro-item-title">
+                                    <a href="https://github.com/Ritesh-Sharma710/layer2_switch" target="_blank"
+                                        rel="noopener">layer2_switch</a>
+                                </h3>
+                                <p class="retro-item-desc">Data link layer network switch simulator featuring MAC
+                                    learning and frame forwarding.</p>
+                            </div>
+                        </li>
+                        <li class="retro-list-item">
+                            <div class="retro-time">
+                                <span>08</span>
+                                <span>2025</span>
+                            </div>
+                            <div class="retro-item-content">
+                                <h3 class="retro-item-title">
+                                    <a href="projects.html">Intrusion Detection System (IDS)</a>
+                                </h3>
+                                <p class="retro-item-desc">Logs analysis, real-time intrusion detection, and IP blocking
+                                    using Python, R & Snort.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
 
+                <!-- Patents and Publications Section -->
+                <div class="retro-section">
+                    <h2>Patents and Publications</h2>
+                    <ul class="retro-list">
+                        <li class="retro-list-item">
+                            <div class="retro-time">
+                                <span>15</span>
+                                <span>Apr 2026</span>
+                            </div>
+                            <div class="retro-item-content">
+                                <h3 class="retro-item-title">
+                                    <a href="javascript:void(0);">Vehicle Emission Certification</a>
+                                </h3>
+                                <p class="retro-item-desc">Automated Real-Time Vehicle Emission Monitoring and IoT-Based
+                                    Certification System.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
 
-                <h1>About</h1>
+                <!-- About Section -->
+                <div class="retro-section">
+                    <h2>About</h2>
+                    <p>
+                        I’m a Computer Science Undergraduate passionate about systems engineering, Linux,
+                        cloud infrastructure, and backend development.
+                        I enjoy building software that is reliable, scalable, and efficient—from Unix shells and
+                        distributed systems to networking tools and cloud-native applications.
+                        I believe the best engineering happens by understanding how things work beneath the surface and
+                        solving problems from first principles. Constantly learning, building,
+                        and experimenting, I’m driven to create technology that delivers measurable impact while
+                        continuously sharpening my technical depth through hands-on projects, open-source learning,
+                        and real-world challenges.
+                    </p>
+                </div>
 
-                <p>
-                    I'm a full-stack developer with a passion for building fast, accessible, and beautifully minimal web
-                    experiences. I specialize in modern JavaScript, Go, and Python — and I care deeply about clean code,
-                    performance, and developer experience.
-                </p>
+                <!-- Philosophy Section -->
+                <div class="retro-section">
+                    <h2>Philosophy</h2>
+                    <p>
+                        I believe in writing code that is simple, readable, and maintainable. I value performance and
+                        accessibility, and I aim to build interfaces that feel fast and delightful. Minimalism isn't
+                        just an aesthetic — it's a philosophy that drives every line of code I write.
+                    </p>
+                </div>
 
-                <h2>Philosophy</h2>
-                <p>
-                    I believe in writing code that is simple, readable, and maintainable. I value performance and
-                    accessibility,
-                    and I aim to build interfaces that feel fast and delightful. Minimalism isn't just an aesthetic —
-                    it's a
-                    philosophy that drives every line of code I write.
-                </p>
+                <!-- Get in Touch Section -->
+                <div class="retro-section">
+                    <h2>Get in Touch</h2>
+                    <p>
+                        Feel free to reach out via Social Media or Email.
+                    </p>
+                    <ul class="retro-tags">
+                        <li><a href="https://github.com/Ritesh-Sharma710" target="_blank" rel="noopener"
+                                class="retro-tag-btn">GitHub</a></li>
+                        <li><a href="https://www.linkedin.com/in/ritesh-sharma-3aa43632b" target="_blank" rel="noopener"
+                                class="retro-tag-btn">LinkedIn</a></li>
+                        <li><a href="https://x.com/rizie_rizzler?s=21" target="_blank" rel="noopener"
+                                class="retro-tag-btn">Twitter / X</a></li>
+                        <li><a href="contact.html" class="retro-tag-btn">Email Me</a></li>
+                    </ul>
+                </div>
 
-                <h2>Get in Touch</h2>
-                <p>
-                    Feel free to reach out via Social Media.
-                </p>
-                <ul class="tags">
-                    <li><a href="https://github.com/Ritesh-Sharma710" target="_blank" rel="noopener">GitHub</a></li>
-                    <li><a href="https://www.linkedin.com/in/ritesh-sharma-3aa43632b" target="_blank"
-                            rel="noopener">LinkedIn</a></li>
-                    <li><a href="https://x.com/rizie_rizzler?s=21" target="_blank" rel="noopener">Twitter / X</a></li>
-                    <li><a href="contact.html">Email Me</a></li>
-                </ul>
+            </div>
+            <!-- end blog-frame -->
+        </div>
+        <!-- end blog-page -->
     </main>
 
     <hr>
 
-    <footer>
-        <span>&copy; The-Syntax-Sage 2026</span>
+    <!-- Footer -->
+    <footer class="site-footer">
+        <span class="site-footer-copy">&copy; 2026 Syntax Sage — The-Syntax-Sage</span>
+        <ul class="site-footer-links">
+            <li><a href="https://github.com/Ritesh-Sharma710" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/ritesh-sharma-3aa43632b" target="_blank"
+                    rel="noopener">LinkedIn</a></li>
+            <li><a href="https://x.com/rizie_rizzler?s=21" target="_blank" rel="noopener">X / Twitter</a></li>
+            <li><a href="index.html">Portfolio</a></li>
+        </ul>
     </footer>
 
     <script src="script.js"></script>
