@@ -11,8 +11,8 @@
     --border: oklch(35% 0 0);
     --link: oklch(84.896% 0.13993 196.594);
     --link-hover: oklch(80% 0.18 195);
-    --heading: oklch(85% 0.15 85);
-    --heading-hash: oklch(70% 0.12 85);
+    --heading: #c67a00;
+    --heading-hash: #b86810;
     --time-bg: oklch(18% 0 0);
     --time-fg: oklch(55% 0 0);
     --code-bg: oklch(15% 0 0);
@@ -20,17 +20,17 @@
     --input-bg: oklch(5% 0 0);
     --input-border: oklch(40% 0 0);
     --input-focus: oklch(70% 0.18 195);
-    --nav-1: #d4912a;
-    --nav-2: #d4912a;
-    --nav-3: #d4912a;
-    --nav-4: #d4912a;
-    --nav-5: #d4912a;
-    --nav-6: #d4912a;
+    --nav-1: #c67a00;
+    --nav-2: #c67a00;
+    --nav-3: #c67a00;
+    --nav-4: #c67a00;
+    --nav-5: #c67a00;
+    --nav-6: #c67a00;
     --gallery-border: oklch(30% 0 0);
     --tag-bg: oklch(20% 0 0);
     --tag-fg: oklch(70% 0.15 195);
     --desc-fg: oklch(55% 0 0);
-    --title-fg: oklch(82% 0.18 85);
+    --title-fg: #c67a00;
 
     /* Spacing tokens (8px grid) */
     --sp-1: 8px;
@@ -55,8 +55,8 @@ html:not(.dk) {
     --border: oklch(85% 0 0);
     --link: oklch(52.229% 0.24827 264.494);
     --link-hover: oklch(55% 0.2 265);
-    --heading: oklch(30% 0.1 25);
-    --heading-hash: oklch(45% 0.1 25);
+    --heading: #803200;
+    --heading-hash: #803200;
     --time-bg: #f4f4f5;
     --time-fg: oklch(40% 0 0);
     --code-bg: #f4f4f5;
@@ -64,17 +64,17 @@ html:not(.dk) {
     --input-bg: #fafafa;
     --input-border: oklch(80% 0 0);
     --input-focus: oklch(45% 0.2 265);
-    --nav-1: oklch(0% 0 0);
-    --nav-2: oklch(0% 0 0);
-    --nav-3: oklch(0% 0 0);
-    --nav-4: oklch(0% 0 0);
-    --nav-5: oklch(0% 0 0);
-    --nav-6: oklch(0% 0 0);
+    --nav-1: #803200;
+    --nav-2: #803200;
+    --nav-3: #803200;
+    --nav-4: #803200;
+    --nav-5: #803200;
+    --nav-6: #803200;
     --gallery-border: #e4e4e7;
     --tag-bg: #f4f4f5;
     --tag-fg: oklch(45% 0.2 265);
     --desc-fg: oklch(45% 0 0);
-    --title-fg: oklch(40% 0.15 25);
+    --title-fg: #803200;
 
     /* Light mode structural overrides */
     --border-color: #e4e4e7;
